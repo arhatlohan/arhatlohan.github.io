@@ -1,7 +1,7 @@
 ---
 title: hexo multi PC sync config
 date: 2016-08-29 09:14:18
-tags:
+tags: hexo
 ---
 ## Introduce
 本文基于[关于博客同步的解决办法](http://devtian.me/2015/03/17/blog-sync-solution/),和[利用git解决hexo博客多PC间同步问题](http://chitanda.me/2015/06/18/hexo-sync-in-multiple-pc/),结合自己的实际操作，解决Hexo多PC同步问题。在此，对两位作者表示感谢！
