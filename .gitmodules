@@ -1,0 +1,3 @@
+[submodule "themes/ghost-casper"]
+	path = themes/ghost-casper
+	url = git@github.com:arhatlohan/hexo-theme-ghost-casper.git
