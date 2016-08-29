@@ -71,3 +71,5 @@ deploy:
   type: git
   repository: git@github.com:arhatlohan/arhatlohan.github.io.git
   branch: master
+
+plugins: hexo-generator-feed

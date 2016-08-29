@@ -113,3 +113,27 @@ A submodule is nothing but a clone of a git repo within another repo with some e
 > $ git commit -m "add blog"
 > $ git push origin source
 
+
+
+
+
+## 添加RSS
+npm install hexo-generator-feed --save
+然后在博客配置文件_config.yml中添加启动
+plugins: hexo-generator-feed
+
+
+
+
+## hexo 代码高亮
+格式是：
+> ```+语言名（比如java）
+> //代码内容
+> ```
+example:
+``` python
+def func:
+    print "Hello"
+```
+
+
