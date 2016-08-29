@@ -39,7 +39,7 @@ hexo作为一个非常优秀的静态博客框架，hexo与传统的博客托管
 > git commit -m "first commit" 
 > git push origin source
 
-### 将git的内容同步到本地
+### 将git的内容同步到B主机
 在另外一台电脑上，先把node环境配好，安装hexo。
 > npm install hexo-cli -g
 
@@ -60,4 +60,36 @@ hexo作为一个非常优秀的静态博客框架，hexo与传统的博客托管
 
 这样就完成了多终端的博客同步。
 
+再到A主机的时候，只需要
+git pull
+即可同步更新
+
+
+## 下面说一下第三方主题的同步问题
+
+我们一般会选择第三方主题的仓库直接git clone下来。这是一个非常不好的习惯，正确做法是：Fork该第三方主题仓库，这样就会在自己账号下生成一个同名的仓库，并对应一个url，我们应该git clone自己账号下的url。
+
+这样做的原因是：我们很有可能在原来主题基础上做一些自定义的小改动，为了保持多终端的同步，我们需要将这些改动提交到远程仓库。而第三方仓库我们是无法直接push的。
+
+这样就会出现git仓库的嵌套问题，我们通过git submodule来解决这个问题。
+`git submodule add git@github.com:username/hexo-theme-next.git themes/next`
+
+我们修改主题后:
+<pre><code>git commit -am "refine UI"
+git push origin source
+</code></pre>
+
+在另外一个终端上执行：
+<pre><code>git submodule init // 这句很重要
+git submodule update</code></pre>
+
+
+
+
+## 关于config.xml的配置
+<pre><code>deploy:
+  type: git
+  repository: git@github.com:username/username.github.io.git
+  branch: master
+</pre></code>
 
