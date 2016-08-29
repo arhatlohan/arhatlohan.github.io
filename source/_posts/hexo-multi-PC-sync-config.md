@@ -93,3 +93,23 @@ git submodule update</code></pre>
   branch: master
 </pre></code>
 
+
+
+## 关于git submodule push 不成功的问题
+采用devtian 的submodule方法，可以成功建立，但是更新不成功。
+在stackoverflow找到解决办法[Git submodule push](http://stackoverflow.com/questions/5814319/git-submodule-push)
+A submodule is nothing but a clone of a git repo within another repo with some extra meta data (gitlink tree entry, .gitmodules file )
+> $ cd your_submodule     #themes/ghost-casper
+> $ git checkout master
+> $ git commit -a -m "commit in submodule"
+> $ git push
+> $ cd ..
+> $ git add your_submodule
+> $ git commit -m "Updated submodule"
+
+原理我没有搞明白，至少可以实现，另外submodule更新较慢，需要多等一会,才能在github上看到
+因为要备份md sourcefile，所以要记得多更新
+> $ git add .
+> $ git commit -m "add blog"
+> $ git push origin source
+
