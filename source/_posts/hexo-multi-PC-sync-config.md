@@ -1,0 +1,63 @@
+---
+title: hexo multi PC sync config
+date: 2016-08-29 09:14:18
+tags:
+---
+## Introduce
+本文基于[关于博客同步的解决办法](http://devtian.me/2015/03/17/blog-sync-solution/),和[利用git解决hexo博客多PC间同步问题](http://chitanda.me/2015/06/18/hexo-sync-in-multiple-pc/),结合自己的实际操作，解决Hexo多PC同步问题。在此，对两位作者表示感谢！
+
+## Scene
+单位和家里两PC，同时都想更新blog。而由于hexo没有后台，而且全部文件都在本地生成，所以如果公司电脑上发表了A文章后回家又写了篇B文章，在家里上传后你会发现只有B文章而A文章没了（因为家里的PC上没有A文章的md文件），所以多台电脑同时用来写文章的时候，需要解决备份问题。
+另外，笔者就遇到误删的情况，本地Hexo文件夹被彻底删除，原始md文件丢失，新md文件和以前html文件无法同时呈现，此问题至今未解决。
+
+## Theory
+hexo作为一个非常优秀的静态博客框架，hexo与传统的博客托管网站不同的一点是博客的源文件是保存在本地的，并通过hexo框架提供的hexo generate 和 hexo deploy命令将markdown文件生成相应的html文件，并发布到github-pages上去。
+
+我们通过 hexo deploy发布到github-pages的时候，会将public目录（html文件）自动push到远程仓库的master分支。但这个对多终端博客同步没有任何意义，因为我们每次hexo generate都会根据source目录下的markdown源文件重新生成html文件，所以解决问题的关键是怎么同步source目录下的源文件，不仅如此，还有配置文件_config.yml，scanffolds目录，themes目录。
+
+## Steps
+首先我们进入到博客系统的根目录，比如blog目录，这里边有个.gitignore文件（如果该文件不存在，自己创建一个），里边默认已经把该忽略的目录文件都写好了，里边内容如下：
+> .DS_Store
+> Thumbs.db
+> db.json
+> *.log
+> node_modules/
+> public/
+> .deploy*/%
+
+然后在blog目录初始化仓库，切换到source分支，关联远程仓库，并push到远程仓库的source分支
+1. $ cd blog
+2. $ git init                 #在当前目录新建一个Git代码库
+3. $ git checkout -b source   #新建一个source分支，并切换到该分支
+4. $ git add .      ##添加blog目录下所有文件(.gitignore声明的文件不包含在内)
+5. $ git commit -m "first commit"    ##添加更新说明
+6. $ git remote add origin git@github.com:username/username.github.io.git
+7. $ git push origin source   #推送更新到云端服务器
+
+### 添加本地文件到仓库并同步到git上，可以用：
+> git add . 
+> git commit -m "first commit" 
+> git push origin source
+
+### 将git的内容同步到本地
+在另外一台电脑上，先把node环境配好，安装hexo。
+> npm install hexo-cli -g
+
+注意不要再执行：
+> hexo init blog 
+
+取而代之的是
+> git clone -b source git@github.com:username/username.github.io.git
+> npm install //根据package.json来下载依赖包
+
+这样把远程仓库的source分支克隆下来，然后安装依赖包。接下来我们就可以继续写博客了
+1. $ hexo new "about hexo sync"
+2. $ hexo generate
+3. $ hexo deploy
+4. $ git add .
+5. $ git commit -m "add blog"
+6. $ git push origin source
+
+这样就完成了多终端的博客同步。
+
+
