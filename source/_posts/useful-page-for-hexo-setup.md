@@ -1,7 +1,7 @@
 ---
-title: useful page for  hexo  setup
+title: Hexo高级配置参考网址
 date: 2016-08-29 00:09:52
-tags:
+tags: hexo
 ---
 
 关于博客同步的解决办法

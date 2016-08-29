@@ -1,5 +1,5 @@
 ---
-title: hexo multi PC sync config
+title: Hexo 多主机同步解决方法和配置
 date: 2016-08-29 09:14:18
 tags: hexo
 ---
@@ -127,9 +127,9 @@ plugins: hexo-generator-feed
 
 ## hexo 代码高亮
 格式是：
-> ```+语言名（比如java）
-> //代码内容
-> ```
+\`\`\`+语言名（比如java）
+//代码内容
+\`\`\`
 example:
 ``` python
 def func:
