@@ -63,7 +63,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: ghost-casper
+theme: ghost-casper #hexo-theme-next # # #ghost-casper
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
