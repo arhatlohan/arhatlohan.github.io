@@ -1,5 +1,5 @@
 ---
-title: Linux 温习
+title: Linux 温习(一)
 date: 2016-08-30 22:49:02
 tags: Linux
 ---
