@@ -48,7 +48,12 @@ hexo作为一个非常优秀的静态博客框架，hexo与传统的博客托管
 
 取而代之的是
 > git clone -b source git@github.com:username/username.github.io.git
+> cd username.github.io
 > npm install //根据package.json来下载依赖包
+
+（如果主题是自己的话，作为子模块存在）至此，我们已经把md文件下载完毕，但是themes目录是空的，现在需要：
+<pre><code>git submodule init // 这句很重要
+git submodule update</code></pre>
 
 这样把远程仓库的source分支克隆下来，然后安装依赖包。接下来我们就可以继续写博客了
 1. $ hexo new "about hexo sync"
@@ -61,7 +66,7 @@ hexo作为一个非常优秀的静态博客框架，hexo与传统的博客托管
 这样就完成了多终端的博客同步。
 
 再到A主机的时候，只需要
-git pull
+`git pull`
 即可同步更新
 
 
@@ -73,8 +78,9 @@ git pull
 
 这样就会出现git仓库的嵌套问题，我们通过git submodule来解决这个问题。
 `git submodule add git@github.com:username/hexo-theme-next.git themes/next`
+后面的theme 应该是自己fork到自己账户的theme
 
-我们修改主题后:
+我们修改主题后:（可能不成功，不成功用下面的方法同步：关于git submodule push 不成功的问题）
 <pre><code>git commit -am "refine UI"
 git push origin source
 </code></pre>
@@ -82,7 +88,7 @@ git push origin source
 在另外一个终端上执行：
 <pre><code>git submodule init // 这句很重要
 git submodule update</code></pre>
-
+即可同步作为子模块的主题
 
 
 
