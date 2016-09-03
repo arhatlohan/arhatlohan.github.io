@@ -3,10 +3,10 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Arhatl0han
+title: FlamePeak
 subtitle: 'We know something, but we do not know more.'
 description:
-author: Arhatl0han
+author: FlamePeak
 language:
 timezone:
 
@@ -64,6 +64,12 @@ pagination_dir: page
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 theme: ghost-casper #hexo-theme-next # # #ghost-casper
+
+# generate sitemap
+sitemap:
+  path: sitemap.xml
+baidusitemap:
+  path: baidusitemap.xml
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html

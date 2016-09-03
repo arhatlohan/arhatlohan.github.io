@@ -15,14 +15,14 @@ echo $variabename  读取变量的值，$表示引用一个变量的值
 |export|显示当前导出成用户变量的shell变量|
 
 **添加自定义路径到环境变量**
-    PATH=$PATH:/home/test
+`PATH=$PATH:/home/test`
 注意要使用绝对路径
 
-在每个用户的home目录中有一个Shell每次启动都会默认执行的一个配置脚本，以初始化环境，包括添加一些用户自定义环境变量。zsh的配置文件是<font color="Crimsom" size=3>.zshrc</font>, 相应BASH的配置文件是<font color="Crimsom" size=3>.bashrc</font>。可以使用下面的方式添加环境变量：
-    echo "PATH=$PATH:/home/test" >> .zshrc
+在每个用户的`home`目录中有一个Shell每次启动都会默认执行的一个配置脚本，以初始化环境，包括添加一些用户自定义环境变量。zsh的配置文件是<font color="Crimsom" size=3>.zshrc</font>, 相应BASH的配置文件是<font color="Crimsom" size=3>.bashrc</font>。可以使用下面的方式添加环境变量：
+`echo "PATH=$PATH:/home/test" >> .zshrc`
 
 **环境变量删除：**
-   unset varname
+`unset varname`
 
 **source命令：**
 source命令也称为“点命令”，也就是一个点符号（.）,是bash的内部命令。
@@ -61,3 +61,26 @@ e.g:
 - newer file: file为一个已存在的文件，列出比file还要新的文件名
 
 注意：数字位置表示过去的天数，数字为负表示将来的天数，0表示今天
+
+
+
+## 文件打包与压缩
+Linux压缩包文件格式：`*.zip`, `*.rar`, `*.7z`, `*.gz`, `*.xz`, `*.bz2`, `*.tar`, `*.tar.gz`, `*.tar.xz`, `*.tar.bz2`
+
+|扩展名|说明|
+|----|----|
+|*.zip   |zip程序打包压缩的文件|
+|*.rar   |rar程序压缩的文件|
+|*.7z    |7zip程序压缩的文件|
+|*.tar   |tar程序打包，**未压缩**的文件|
+|*.gz    |gzip程序(GNU zip)压缩的文|
+|*.xz    |xz程序压缩的文件|
+|*.bz2   |bzip2程序压缩的文件|
+|*.tar.gz    |tar打包，gzip程序压缩的文件|
+|*.tar.xz    |tar打包，xz程序压缩的文件|
+|*tar.bz2    |tar打包，bzip2程序压缩的文件|
+|*.tar.7z    |tar打包，7z程序压缩的文件|
+
+`zip -r -9 -q -l -o file.zip /home/destdir`
+其中`-r`代表递归子目录，`-9`表示压缩效果最好，速度最慢，取值范围(1-9),`-q`表示安静模式，`-o`表示输出文件，后跟打包输出的文件名, `-l`参数将`LF`转换为`CR+LF`，确保生成的zip在Windows中没有问题。
+
