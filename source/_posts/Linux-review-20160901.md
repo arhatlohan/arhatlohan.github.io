@@ -1,5 +1,5 @@
 ---
-title: Linux 温习(二)
+title: Linux 温习(二):环境变量 文件搜索 文件打包与压缩
 date: 2016-09-01 20:36:23
 tags: Linux
 ---
@@ -83,4 +83,23 @@ Linux压缩包文件格式：`*.zip`, `*.rar`, `*.7z`, `*.gz`, `*.xz`, `*.bz2`, 
 
 `zip -r -9 -q -l -o file.zip /home/destdir`
 其中`-r`代表递归子目录，`-9`表示压缩效果最好，速度最慢，取值范围(1-9),`-q`表示安静模式，`-o`表示输出文件，后跟打包输出的文件名, `-l`参数将`LF`转换为`CR+LF`，确保生成的zip在Windows中没有问题。
+
+`unzip -q file.zip`
+中文编码的问题，通常 Windows 系统上面创建的压缩文件，如果有有包含中文的文档或以中文作为文件名的文件时默认会采用 GBK 或其它编码，而 Linux 上面默认使用的是 UTF-8 编码，如果不加任何处理，直接解压的话可能会出现中文乱码的问题，为了解决这个问题，我们可以在解压时指定编码类型。
+`unzip -O GBK 中文压缩文件.zip`
+
+**tar**
+打包：`tar -cf destfile.tar  sourcefile`
+解包：`tar -xf sourcefile.tar -C destdir`,解包sourcefile.tar到指定路径的已存在目录
+
+使用gzip压缩打包
+压缩：`tar -czf destfile.tar.gz  sourcefile`
+解压：`tar -xzf destfile.tar.gz`
+
+|压缩文件格式|参数|
+|----|----|
+|*.tar.gz   |-z|
+|*.tar.xz   |-J|
+|*.tar.bz2  |-j|
+
 
