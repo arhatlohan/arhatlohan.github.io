@@ -41,6 +41,26 @@ def count_words(s, n):
                 temp.append(s_per_ed)        
         dest.extend(sorted(temp))
         i=i-1
-    return dest
+    return dest[:n]
+```
+
+
+09.08
+今日看到collections，所以就用collections写了一个简单的版本：
+``` Python
+import collections
+def count_words(s, n):
+    cnt = collections.Counter(s.split()).most_common()
+
+    i = cnt[0][1]
+    dest=[]
+    while i>0:
+        temp =[]
+        for s_per_ed in cnt:
+            if s_per_ed[1]==i:
+                temp.append(s_per_ed)        
+        dest.extend(sorted(temp))
+        i=i-1
+    return dest[:n]
 ```
 
