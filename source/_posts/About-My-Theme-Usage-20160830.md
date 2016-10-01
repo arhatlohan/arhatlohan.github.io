@@ -1,7 +1,7 @@
 ---
 title: 关于我的主题的一些设置
 date: 2016-08-30 23:18:07
-tags: Theme, Hexo
+tags: [Theme, Hexo]
 ---
 
 ## Introduce
