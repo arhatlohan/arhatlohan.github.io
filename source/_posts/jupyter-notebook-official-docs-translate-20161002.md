@@ -78,7 +78,7 @@ Jupyter notebook web应用程序的登录页，即主面板(dashboard)，显示n
 > 在notebook 4.1版本，用户界面允许同时选择多个单元。当多个单元被选择，菜单栏中`quick celltype selector`将会显示一个横线`-`，指示选区中的单元的类型可能不一致。`quick celltype selector`可以被用来改变选区的类型，将会改变所有选中单元的类型。
 
 ### notebook文件的结构
-notebook由一系列的单元组成。单元是一个多行的文本输入区域，它的内容可以使用`Shift+Enter`来执行，或者单击工具栏`Play`按钮，或使用菜单栏*Cell/Run*运行。单元如何执行是由单元的类型决定的。共有四种类型的单元：**代码单元(code cells)**,**markdown单元(markdown cells)**,**纯文本单元(raw cells)**,**标题单元(heading cells)**.每一个单元开始都是代码单元，但它的类型可以通过工具栏下拉框(初始值为`Code`)进行修改，也可以使用键盘[快捷键](http://jupyter-notebook.readthedocs.io/en/latest/notebook.html#keyboard-shortcuts)进行修改。
+notebook由一系列的单元组成。单元是一个多行的文本输入区域，它的内容可以使用`Shift+Enter`来执行，或者单击工具栏`Play`按钮，或使用菜单栏*Cell/Run*运行。单元如何执行是由单元的类型决定的。共有四种类型的单元：**代码单元(code cells)**,**markdown单元(markdown cells)**,**原始单元(raw cells)**,**标题单元(heading cells)**.每一个单元开始都是代码单元，但它的类型可以通过工具栏下拉框(初始值为`Code`)进行修改，也可以使用[快捷键](http://jupyter-notebook.readthedocs.io/en/latest/notebook.html#keyboard-shortcuts)进行修改。
 
 更多notebook可以实现的功能，请参考[例子](http://nbviewer.jupyter.org/github/jupyter/notebook/tree/master/docs/source/examples/Notebook/).
 
@@ -88,7 +88,7 @@ notebook由一系列的单元组成。单元是一个多行的文本输入区域
 当一个代码单元被执行时，代码被发送到和notebook连接的内核。计算返回的结果显示在notebook中作为单元的输出(output).输出不仅限于文字，其它很多可能格式都是可行的，包括`matplotlib`图像和HTML表格(例如`pandas`数据分析包使用的表格)。这就是著名的IPython富媒体显示能力。
 
 > 参见：
-notebook[富媒体输出(Rich Output)](https://nbviewer.jupyter.org/urls/raw.github.com/ipython/ipython/3.x/examples/IPython%20Kernel/Rich%20Output.ipynb)例子
+notebook[富媒体输出(Rich Output)](https://nbviewer.jupyter.org/urls/raw.github.com/ipython/ipython/3.x/examples/IPython%20Kernel/Rich%20Output.ipynb)举例
 
 #### Markdown单元(Markdown cells)
 你可以采用方便阅读的方式记录计算过程，交替使用描述性文字(使用富文本)和代码. 在IPython中，这通过Markdown语言标记文本来说完成。相应的单元被称为Markdown单元。Markdown语言提供了一种简单的方式实现文本标记，即指定哪一部分文字应当被强调(斜体)、加粗、构成列表等。
@@ -97,10 +97,20 @@ notebook[富媒体输出(Rich Output)](https://nbviewer.jupyter.org/urls/raw.git
 
 在Markdown单元内部，你可以直接包含数学符号：行内数学符号使用标准的LateX标记:`$...$`,行间数学符号使用`$$...$$`标记。当Markdown单元被执行时，LaTeX部分自动生成高质量排版的方程式。[MathJax](http://www.mathjax.org/)使这成为可能，它支持LaTeX功能中的很大一部分。
 
-#### 纯文本单元(Raw cells)
+LaTeX和AMS-LaTeX定义的标准公式环境同样可以使用，比如`\begin{equation}...\end{equation}`和`\begin{align}...\end{align}`。新的LaTeX宏可以使用标准的方法来定义，比如`\newcommand`，把它们放置在Markdown单元里数学分隔符之间的任何位置。这些定义在此后的整个IPython会话中可用。
+
+> 参见：
+notebook[Markdown单元](http://jupyter-notebook.readthedocs.io/en/latest/notebook.html#markdown-cells)举例
+
+#### 原始单元(Raw cells)
+原始单元提供了一个可以直接写输出(output)的地方。notebook不对原始单元进行计算或求值。当通过nbconvert转换为目的格式时，原始单元没有被修改。例如，你可以在原始单元键入LaTeX数据，这些数据只有在被nbconvert转换后才可以被LaTeX生成。
 
 #### 标题单元(Heading cells)
+如果你想对文件进行结构化处理，你可以使用markdown标题。Markdown标题由1到6个`#`号和跟在后面的一个空格、段落标题组成。markdown标题将会被转换成notebook中一个可以点击的链接。它同样被用来作为一种提示，当我们转换成其他文件格式时，例如PDF。我们建议在一个单元中只使用一个markdown标题，同时限制单元的内容与标题相关。为了灵活的转换格式，我们建议把其余的文本放置在下一个notebook单元。
 
+### 基本工作流程(Basic workflow)
+
+#### 快捷键(Keyboard shortcuts)
 
 
 
