@@ -1,5 +1,5 @@
 ---
-title: Jupyter官方教程 翻译
+title: Jupyter官方文档(教程)-Start Here部分 翻译
 date: 2016-09-12 23:07:07
 tags: [Python, Jupyter]
 ---
@@ -105,7 +105,7 @@ notebook服务器提供命令行参数的帮助信息，使用`--help`:
 + 了解imports的变化
 
 ### 概述
-[大分割计划(The Big Split)](https://blog.jupyter.org/2015/04/15/the-big-split/)将IPython中各种语言无关( language-agnostic)的组件移动到Jupyter之下。将来，Jupyter将会包含与语言无关的项目,这些项目支持(serve)多种语言。IPython将继续专注于Python和它在Jupyter上的使用。
+[大分割计划(The Big Split)](https://blog.jupyter.org/2015/04/15/the-big-split/)将IPython中各种编程语言无关( language-agnostic)的组件移动到Jupyter之下。将来，Jupyter将会包含与编程语言无关的项目,这些项目支持(serve)多种编程语言。IPython将继续专注于Python和它在Jupyter上的使用。
 这篇文章介绍当你从IPython 3迁移到Jupyter时，有哪些变化，以及在需要的时候如何修改代码或配置。
 
 ### 了解迁移过程
@@ -197,3 +197,74 @@ IPython.kernel 变成两个包：
 + jupyter_client: Jupyter 客户端API
 + ipykernel: Jupyter的IPython内核
 
+
+
+---
+
+## 结构指南
++ IPython 和Jupyter如何工作
++ 项目的可视化概览
+
+### IPython 和Jupyter如何工作
+**内容**
++ 摘要
++ IPython 终端(terminal)
++ IPython 内核
++ Notebooks
++ 导出notebooks到其他格式
++ IPython.parallel
+
+#### 摘要
+这部分重点介绍IPython和Jupyter notebook，以及它们如何交互。当我们讨论`IPython`时，我们谈论两个基本角色
++ IPython终端，作为交互式开发环境(REPL)
++ IPython内核，提供与前端接口(比如notebook)的计算和通信
+Jupyter Notebook和其灵活的接口拓展notebook功能，不仅仅是代码，还可以实现可视化、多媒体、协作以及其它更多的功能。
+#### IPython 终端(terminal)
+当你在命令行中输入`ipython`，你将会得到原始的IPython界面。它的功能如下：
+```Python
+while True:
+    code = input(">>> ")
+    exec(code)
+```
+当然，它会更复杂，因为它还要处理多行代码、tab自动补全、魔术命令等。这种模式就像举例代码一样：提示用户输入一段代码，当用户输入以后执行。这种模式经常被称为REPL(交互式开发环境)，或者Read-Eval-Print-Loop(读取﹣求值﹣输出循环).
+#### IPython 内核
+所有其它接口，包括Notebook，Qt控制台，ipython控制台和其它第三方接口，都使用IPython内核。IPython内核是一个独立的进程，负责执行用户代码和其它事情，例如计算可能的补全。前端处理器，例如notebook和Qt控制台，使用ZeroMQ传输JSON消息与IPython内核通信，前端处理器与IPython内核通信使用的协议详细描述请参考[Jupyter 消息](https://jupyter-client.readthedocs.io/en/latest/messaging.html#messaging).
+内核的核心执行机制与IPython终端是一致的：
+![ipy_kernel_and_terminal.png](/sourcepictures/20160912/ipy_kernel_and_terminal.png)
+一个内核进程可以同时连接多个前端处理器。在这种情况下，不同的前端处理器将会拥有相同的变量。
+这种设计目的是使基于同样内核开发前端处理器变得容易，同样，这也是的在同一前端支持新的编程语言成为可能。通过在其他编程语言中开发内核，我们把IPython变得更加实用。
+现在，我们有两种方式为其它编程语言开发内核。封装器内核(Wrapper kernels)重用IPython的通信机制，并实现只有核心执行部件。原生内核(Native kernels)实现目标编程语言的执行和通信。
+![other_kernels.png](/sourcepictures/20160912/other_kernels.png)
+封装器内核(Wrapper kernels)更容易快速编写有很好Python封装器的编程语言，例如[octave_kernel](https://pypi.python.org/pypi/octave_kernel),或难以实现通信机制的编程语言，例如[bash_kernel](https://pypi.python.org/pypi/bash_kernel).原生内核(Native kernels)通常被使用它们的社区更好的维护，例如[IJulia](https://github.com/JuliaLang/IJulia.jl)和[IHaskell](https://github.com/gibiansky/IHaskell).
+#### Notebooks
+Notebook 前端处理器做一些额外的事情。除了运行你的代码，它还储存代码和输出、以及markdown注释在一个可编辑的文档中，我们称这个文档为一个notebook。当你保存这个文档时，它会从你的浏览器发送到notebook服务器，服务器将文档保存为以`.ipynb`为扩展名的JSON格式文件。
+![notebook_components.png](/sourcepictures/20160912/notebook_components.png)
+notebook服务器，而不是内核，负责保存和载入notebook，因此你可以编辑notebook即使你没有那种编程语言的内核，你仅仅不能运行notebook中的代码。内核不知道notebook文档任何事情，它只是在用户运行代码时获取用户发送的代码并执行。
+#### 导出notebooks到其他格式
+Jupyter中的工具Nbconvert可以将notebook文件转换到其它格式，例如HTML,LaTex,或reStructureText.转换经过一系列步骤：
+![nbconvert.png](/sourcepictures/20160912/nbconvert.png)
+1. 预处理器在内存中修改notebook。例如：执行预处理器(ExecutePreprocessor )运行notebook中的代码，并更新输出。
+2. 导出器(exporter)转换notebook到其它文件格式。大多数导出器使用模板进行转换操作。
+3. 后处理器(Postprocessor)对导出的文件进行处理。
+
+[nbviewer](http://nbviewer.jupyter.org/)网站使用nbconvert和HTML导出器。当你输入一个网址，它从输入的网址获取notebook，然后将其转换为HTML格式，并将HTML呈现给你。
+#### IPython.parallel
+IPython同样包含一个并行计算框架，即[IPython.parallel](https://ipyparallel.readthedocs.io/en/latest/)。这允许你控制很多单独的引擎，就是上述的IPython内核扩展版本。
+### 项目的可视化概览
+项目关系的更高层次的概括：
+![repos_map.svg](/sourcepictures/20160912/repos_map.svg)
+
+
+## 叙述和用例 Narratives and Use Cases
+未翻（由于Jupyter介绍内容较多，涉及实际用法较少，所以准备先翻译notebook文档，有时间再翻后面的内容。）
+
+## IPython
+未翻
+
+## 安装，配置和使用 Installation, Configuration, and Usage
+未翻
+
+## 社区指南 Community Guides
+未翻
+## 贡献者指南 Contributor Guides
+未翻
