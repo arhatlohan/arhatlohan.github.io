@@ -88,7 +88,7 @@ notebook由一系列的单元组成。单元是一个多行的文本输入区域
 当一个代码单元被执行时，代码被发送到和notebook连接的内核。计算返回的结果显示在notebook中作为单元的输出(output).输出不仅限于文字，其它很多可能格式都是可行的，包括`matplotlib`图像和HTML表格(例如`pandas`数据分析包使用的表格)。这就是著名的IPython富媒体显示能力。
 
 > 参见：
-notebook[富媒体输出(Rich Output)](https://nbviewer.jupyter.org/urls/raw.github.com/ipython/ipython/3.x/examples/IPython%20Kernel/Rich%20Output.ipynb)举例
+notebook：[富媒体输出(Rich Output)](https://nbviewer.jupyter.org/urls/raw.github.com/ipython/ipython/3.x/examples/IPython%20Kernel/Rich%20Output.ipynb)举例
 
 #### Markdown单元(Markdown cells)
 你可以采用方便阅读的方式记录计算过程，交替使用描述性文字(使用富文本)和代码. 在IPython中，这通过Markdown语言标记文本来说完成。相应的单元被称为Markdown单元。Markdown语言提供了一种简单的方式实现文本标记，即指定哪一部分文字应当被强调(斜体)、加粗、构成列表等。
@@ -100,7 +100,7 @@ notebook[富媒体输出(Rich Output)](https://nbviewer.jupyter.org/urls/raw.git
 LaTeX和AMS-LaTeX定义的标准公式环境同样可以使用，比如`\begin{equation}...\end{equation}`和`\begin{align}...\end{align}`。新的LaTeX宏可以使用标准的方法来定义，比如`\newcommand`，把它们放置在Markdown单元里数学分隔符之间的任何位置。这些定义在此后的整个IPython会话中可用。
 
 > 参见：
-notebook[Markdown单元](http://jupyter-notebook.readthedocs.io/en/latest/notebook.html#markdown-cells)举例
+notebook：[Markdown单元](http://jupyter-notebook.readthedocs.io/en/latest/notebook.html#markdown-cells)举例
 
 #### 原始单元(Raw cells)
 原始单元提供了一个可以直接写输出(output)的地方。notebook不对原始单元进行计算或求值。当通过nbconvert转换为目的格式时，原始单元没有被修改。例如，你可以在原始单元键入LaTeX数据，这些数据只有在被nbconvert转换后才可以被LaTeX生成。
@@ -109,8 +109,37 @@ notebook[Markdown单元](http://jupyter-notebook.readthedocs.io/en/latest/notebo
 如果你想对文件进行结构化处理，你可以使用markdown标题。Markdown标题由1到6个`#`号和跟在后面的一个空格、段落标题组成。markdown标题将会被转换成notebook中一个可以点击的链接。它同样被用来作为一种提示，当我们转换成其他文件格式时，例如PDF。我们建议在一个单元中只使用一个markdown标题，同时限制单元的内容与标题相关。为了灵活的转换格式，我们建议把其余的文本放置在下一个notebook单元。
 
 ### 基本工作流程(Basic workflow)
+notebook正常的工作流程和标准IPython会话的工作流程很相似，不同的是，在这里你可以多次编辑单元直到获得想要的结果，而不是使用魔术命令`%run`重新运行单独的脚本。
+
+通常情况下，将一个计算问题分成多个部分，组织相关的内容到单元中，当前一单元正确执行后继续处理后续单元。处理交互式研究比把计算过程分割成多个脚本一起执行更方便，因为之前结果是必须的，特别如果是某些部分需要很长时间运行。
+
+有时候，可能需要中止一个需要很长时间才能完成的计算。这可以通过菜单栏*Kernel/Interrupt*选项，或者`Ctrl-m i`快捷键。同样的，你可能需要或者想重启整个计算过程，可以通过*Kernel/Restart*，或者快捷键`Ctrl-m`.
+
+notebook文件可以通过菜单栏*File/Download as*下载为`.ipynb`或`.py`格式。当选择`.py`格式下载为Python脚本时，notebook中富文本输出被删除，同时markdown单元的内容作为注释插入到脚本中。
+
+> 参见：
+notebook：[在Jupyter Notebook中运行代码](https://nbviewer.jupyter.org/urls/raw.github.com/ipython/ipython/3.x/examples/Notebook/Running%20Code.ipynb)举例
+notebook：[Notebook基础](https://nbviewer.jupyter.org/urls/raw.github.com/ipython/ipython/3.x/examples/Notebook/Notebook%20Basics.ipynb)
 
 #### 快捷键(Keyboard shortcuts)
+notebook所有操作都可以同时鼠标完成，但是对于常用操作也可以使用快捷键。基本的快捷键如下：
++ `Shift-Enter`：运行单元(run cell)
+执行当前的单元，显示输出(如果有的话)，然后跳到下一个单元。如果`Shift-Enter`在最后一个单元被使用，一个新的代码单元将被创建。注意，在notebook里使用`Enter`键永远不会执行，而只是在当前单元插入一个新行。`Shift-Enter`等同于在菜单栏使用*Cell/Run*.
+
++ `Ctrl-Enter`：运行单元，并保持位置(run cell in-place)
+执行当前单元就像在“终端模式”一样，并显示结果，但是光标仍然在当前单元中。执行完毕后整个单元的内容都被选中，因此你可以开始输入而且只有新输入的数据保留在单元中。这个功能对于做快速试验、或者查询文件系统内容很方便，而不用创建额外的不想保存在notebook中的单元
+
++ `Alt-Enter`：运行单元，并在下方插入新单元(run cell, insert below)
+执行当前单元，显示输出，并在下方插入一个新的单元。这相当于运行两个快捷键`Shift-Enter`和 `Ctrl-m a`。(`Ctrl-m a` 在当前单元上方增加新单元)
+
++ `Esc`和`Enter`：命令模式和编辑模式(Command mode and edit mode)
+在命令模式，你可以使用快捷键浏览整个notebook。在编辑模式，你可以编辑单元中的文本。
+
+查看所有可用的快捷键，你可以通过单击菜单栏*Help/Keyboard Shortcuts*。
+
+
+
+
 
 
 
