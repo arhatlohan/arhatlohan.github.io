@@ -4,8 +4,25 @@ date: 2016-10-02 12:09:25
 tags: [Python, Jupyter]
 ---
 官方文档：http://jupyter-notebook.readthedocs.io/en/latest/notebook.html
+笔者注:
+官方文档共分为以下几个大的部分，将尽力翻译，各部分将以红色横线分割。
++ 用户文档（**翻译完成**）
++ 配置(**翻译中**)
++ 贡献者(Contributor)文档
++ 社区(Comunity)文档
++ 关于Jupyter Notebook
++ 问题与建议
 
----
+
+
+# 用户文档(USER DOCUMENTATION)
+本部分包含5个内容：
++ Jupyter Notebook
++ 安装
++ 运行Notebook
++ 从IPython中迁移
++ 用户界面构成
+
 ## Jupyter Notebook
 ### 介绍
 notebook在一个全新的方向上拓展了基于控制台的方法到交互式计算，提供了一种基于web的应用来记录整个计算过程：开发、编辑、执行代码，同时交互式显示结果。Jupyter notebook 结合了两个部分：
@@ -137,9 +154,285 @@ notebook所有操作都可以同时鼠标完成，但是对于常用操作也可
 
 查看所有可用的快捷键，你可以通过单击菜单栏*Help/Keyboard Shortcuts*。
 
+### 绘图(Plotting)
+Jupyter notebook一个主要特色是能够显示代码单元输出的图表。为了提供这个功能，IPython内核被设计成与matplotlib绘图库无缝结合。内核集成专门的绘图库是一大特色。
+
+### 安装内核(Installing kernels)
+如何安装Python内核，请参考[IPython安装页面](http://ipython.org/install.html).
+其它编程语言的内核可以在[IPython wiki](https://github.com/ipython/ipython/wiki/IPython%20kernels%20for%20other%20languages)中找到。在这里你可以找到如何在notebook中安装使用内核。
+
+### Notebooks 签名(Signing Notebooks)
+为了用户的安全，我们给notebook增加了签名，防止不被信任代码的在notebook打开时执行，签名信息存储在元数据(metadata)中。notebook服务器在notebook文件打开时校验签名信息。如果存储在元数据中的签名信息不一致，在文件载入时javascript和HTML输出将不会被显示，你必须再次执行代码单元来重新生成签名信息。
+
+任何你已经完全执行过的notebook将被认为是可信的，在文件载入时javascript和HTML输出将会显示出来。
+
+如果你想查看HTML或Javascript输出，而不重新执行代码单元，你可以明确指定信任此notebook(例如别人分享给你的notebook、或者你自己使用IPython2.0以前版本生成的notebook),通过使用命令行：
+
+    $ jupyter trust mynotebook.ipynb [other notebooks.ipynb]
+
+这将会生成一个新的签名存储在notebook中。
+你可以生成一个新的签名密钥(signing key),通过：
+
+    $ jupyter trust --reset
+
+### 浏览器兼容性
+Jupyter Notebook官方支持以下浏览器的最近稳定版本：
++ Chrome
++ Safari
++ Firefox
+
+主要原因是notebook使用WebSockets和弹性盒子模型(flexible box model).
+下列浏览器是不支持的：
++ Safari < 5
++ Firefox < 6
++ Chrome < 13
++ Opera (所有): CSS问题, 但是执行可能成功
++ Internet Explorer < 10
++ Internet Explorer ≥ 10 (same as Opera)
+
+使用Safari的HTTPS和不信任的证书是不能正常使用的(websockets 会失败).
+
+---
+
+
+
+## 安装(Installation)
+### 必备：Python
+尽管Jupyter可以运行很多的编程语言代码，**Python**是安装Jupyter Noterbook的必备条件（Python3.3以上，或Python2.7）。
+
+### 使用Anaconda和conda安装Jupyter
+对于新用户，我们强烈建议安装[Anaconda](https://www.continuum.io/downloads). Anaconda可以很方便的安装Python, Jupyter Notebook以及其它科学计算与数据科学常用的包。
+使用下面的安装步骤：
+1. 下载Anaconda。我们建议下载Anaconda的最新Python 3的版本。
+2. 安装你下载的Anaconda。
+3. 恭喜你，你已经安装好了Jupyter Notebook。运行jupyter notebook:
+`jupyter notebook`
+
+### 针对有经验的Python用户：使用pip安装Jupyter
+>重要提示：Jupyter安装需要Python3.3以上，或者Python2.7. IPython 1.x是支持Python3.2和2.6的最后版本。
+
+作为一个Python用户，你可能想使用Python包管理器pip安装Jupyter,而不是Anaconda。
+首先，确保你已经安装了最新版本的pip，旧版本的可能会遇到问题。
+`pip3 install --upgrade pip`
+然后，安装Jupyter Notebook：
+`pip3 install jupyter`
+(Use `pip` if using legacy Python 2.) 注：legacy不知怎么翻，“已停产的”？
+
+### 可选的：安装Kernels
+接下来，介绍在更高的层次在不同的编程语言中使用Jupyter Notebook。
+### 是否有语言是预装的：
+是的。安装Jupyter Notebook将会安装[IPython](https://ipython.readthedocs.io/en/latest/) [kernel](http://jupyter.readthedocs.io/en/latest/glossary.html#term-kernel)。这使得我们在notebooks 上使用python编程语言。
+### 如何同时安装Python 2 和Python 3 ?
+如果要安装其它版本的Python，比如同时使用Python 2和Python 3，请参考IPython文档[安装kernel](https://ipython.readthedocs.io/en/latest/install/kernel_install.html)
+### 如何安装其它编程语言，比如R或Julia ?
+如要在除Python外的其它语言中使用notebooks, 比如R或者Julia，你必须安装额外的内核。更多信息请参考[可用内核](https://github.com/ipython/ipython/wiki/IPython-kernels-for-other-languages)
+
+---
+
+
+
+## 运行Notebook(Running the Notebook)
+**内容**
++ 基本步骤
++ 启动Notebook Server
++ 介绍Notebook Server 的命令后选项
+  + 如何使用自定义的IP和端口启动Notebook？
+  + 如何在不打开浏览器情况下使用Notebook server？
+  + 如何获取Notebook server 选项的帮助信息？
+
+### 基本步骤
+1. 从命令行启动notebook服务器：
+`jupyter notebook`
+2. 你应当可以看到notebook开启了你的浏览器。
+
+### 启动Notebook Server
+在你安装Jupyter Notebook之后，你已经做好运行notebook服务器的准备。你可以从命令后启动notebook服务器:
+`jupyter notebook`
+运行命令之后，命令行将会显示一些关于notebook服务器的信息，包括网络应用程序的`URL`地址(默认值：`http://localhost:8888`):
+```Python
+$ jupyter notebook
+[I 08:58:24.417 NotebookApp] Serving notebooks from local directory: /Users/catherine
+[I 08:58:24.417 NotebookApp] 0 active kernels
+[I 08:58:24.417 NotebookApp] The Jupyter Notebook is running at: http://localhost:8888/
+[I 08:58:24.417 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+```
+然后使用默认的浏览器打开`URL`地址：
+
+浏览器打开notebook之后，你可以看到Notebook面板，Notebook面板将会显示notebook服务器启动目录中的notebook、文件、子目录列表。
+**Notebook 面板**
+![Notebook Dashboard](/sourcepictures/20160912/notebook_dashboard.png)
+
+### 介绍Notebook Server 的命令后选项
+#### 如何使用自定义的IP和端口启动Notebook？
+默认情况下，notebook服务器使用`8888`端口。如果`8888`端口不可用或者被占用，notebook服务器将会寻找下一个可用端口。同样，你可以手动指定一个端口。在下面的例子里，我们设定服务器端口为`9999`：
+`jupyter notebook --port 9999`
+#### 如何在不打开浏览器情况下使用Notebook server？
+启动notebook服务器而不打开浏览器，使用以下命令:
+`jupyter notebook --no-browser`
+#### 如何获取Notebook server 选项的帮助信息？
+notebook服务器提供命令行参数的帮助信息，使用`--help`:
+`jupyter notebook --help`
+
+---
 
 
 
 
+## 从IPython中迁移(Migrating from IPython)
+**内容**
++ 概述
++ 了解迁移过程
+  + 自动迁移文件
+  + 我的配置文件去哪了？
++ 发现重要文件的位置
+  + 配置文件(Configuration files)
+  + 数据文件：kernelspecs和notebook扩展
++ 由于Jupyter没有配置文件(profiles)，我应当如何进行自定义设置？
+  + 更改Jupyter notebook配置目录
+  + 更改Jupyter notebook配置文件
+  + 更改kernelspecs
++ 了解安装的变化
+  + Notebook 扩展
+  + 内核
++ 了解imports的变化
 
+### 概述
+[大分割计划(The Big Split)](https://blog.jupyter.org/2015/04/15/the-big-split/)将IPython中各种编程语言无关( language-agnostic)的组件移动到Jupyter之下。将来，Jupyter将会包含与编程语言无关的项目,这些项目支持(serve)多种编程语言。IPython将继续专注于Python和它在Jupyter上的使用。
+这篇文章介绍当你从IPython 3迁移到Jupyter时，有哪些变化，以及在需要的时候如何修改代码或配置。
+
+### 了解迁移过程
+#### 自动迁移文件
+当你第一次运行任何`jupyter`命令时，Jupyter将会执行一次文件自动迁移。自动迁移进程复制文件，而不是移动文件，确保原始文件不变，复制的文件到Jupyter文件目录中。如果需要的话，你可以使用命令`jupyter migrate`再次运行迁移进程.你的自定义配置将会自动迁移，在Jupyter中无需编辑即可使用。将来当你升级或者修改配置文件时，请留意配置文件的位置可能发生了变化。
+#### 我的配置文件去哪了？
+也被称为“为什么我的配置不起任何作用了？”
+Jupyter 从IPython中分离出来，意味着一些文件的位置发生了变化，Jupyter 项目没有把以前IPython的功能全部继承下来。
+当你第一次启动Jupyter程序时，相关的配置文件自动拷贝到它们在Jupyter中的新位置。在IPython中的原始配置文件不影响Jupyter的执行。如果你意外编辑了原始的IPython配置文件，那么在Jupyter中你将不会看到期望的效果。你应当检查你正在编辑Jupyter的配置文件，同时你应当重启Jupyter服务器才能看到你期望的效果。
+
+### 发现重要文件的位置
+#### 配置文件(Configuration files)
+配置文件根据用户的爱好自定义Jupyter。被迁移的文件应当已经被自动拷贝到它们在Jupyter的新位置。下面是文件位置的变化：
+
+|IPython location|Jupyter location|
+|------|------|
+|`~/.ipython/profile_default/static/custom`|`~/.jupyter/custom`|
+|`~/.ipython/profile_default/ipython_notebook_config.py`|`~/.jupyter/jupyter_notebook_config.py`|
+|`~/.ipython/profile_default/ipython_nbconvert_config.py`|`~/.jupyter/jupyter_nbconvert_config.py`|
+|`~/.ipython/profile_default/ipython_qtconsole_config.py`|`~/.jupyter/jupyter_qtconsole_config.py`|
+|`~/.ipython/profile_default/ipython_console_config.py`|`~/.jupyter/jupyter_console_config.py`|
+
+如果想使用一个目录位置而不是默认的`~/.jupyter`，设置`JUPYTER_CONFIG_DIR`环境变量。在设置环境变量之后，你可能需要运行`jupyter migrate`来拷贝文件到目的目录中。
+
+#### 数据文件：kernelspecs和notebook扩展名
+数据文件(Data Files)包括用户安装的文件，除了配置文件。例如包括kernelspecs和notebook扩展。和配置文件一样，数据文件同样自动迁移到新的Jupyter目录中。
+在IPython 3，数据文件在`~/.ipython`中
+在Jupyter，数据文件在各平台适当的位置：
+  + OS X: `~/Library/Jupyter`
+  + Windows: 位置在环境变量`%APPDATA%`中指定
+  + 其它，通常是`$XDG_DATA_HOME`,默认路径`~/.local/share/jupyter`
+在以上所有平台，环境变量`JUPYTER_DATA_DIR`可以用来设置明确的位置。
+系统层面（system-wide）安装的数据文件没有变化(e.g.`/usr/local/share/jupyter`)。每个用户(Per-user)安装的数据文件位置从`.ipython`变换到各平台适当的位置。
+
+### 由于Jupyter没有配置文件(profiles)，我应当如何进行自定义设置？
+尽管IPython有配置文件(profiles)的概念，但是Jupyter没有配置文件(profiles)。
+在IPython，配置文件是配置和运行文件的集合。在IPython目录(`~/.ipython`)中，有很多像`profile_default`和`profile_demo`名字的目录。在这些目录里是配置文件(configuration file)(`ipython_config.py, ipython_notebook_config.py`)和运行文件(`history.sqlite, security/kernel-*.json`).配置文件(profiles)可以用来改变IPython的配置。
+之前，我们可以使用命令`ipython notebook --profile demo`同时对notebook server和IPython kernel进行配置。但是，在Jupyter中不能同时对其进行配置，就像在IPython 3中不能对其他内核的同时配置。
+
+#### 更改Jupyter notebook配置目录
+如果你想改变Jupyter notebook的配置，你可以设置`JUPYTER_CONFIG_DIR`:
+```Python
+JUPYTER_CONFIG_DIR=./jupyter_config
+jupyter notebook
+```
+
+#### 更改Jupyter notebook配置文件
+如果你只是想改变配置文件，你可以：
+```Python
+jupyter notebook --config=/path/to/myconfig.py
+```
+
+#### 更改kernelspecs
+如果你确实想改变IPython的内核文件，你不能通过在服务器命令行实现了。内核参数改变必须通过修改kernelspec来实现。你不用重启服务器就可以做到这一点。Kernelspec的改变在你开启一个新kenel时生效。然而，没有修改Kernelspec的好办法。一个办法是使用`jupyter kernelspec list`找到`kernel.json`文件文件，然后修改它，例如手动修改`kenels/python3/kernel.json`. 另外，[a2km](https://github.com/minrk/a2km)是一个努力使修改内核描述变得更容易的实验性项目。
+
+### 了解安装的变化
+#### Notebook 扩展
+所有IPython notebook 扩展都被自动迁移到Jupyter中。
+IPython Notebook 安装扩展使用：
+```Python
+ipython install-nbextension [--user] EXTENSION
+```
+现在，在Jupyter中，安装扩展使用：
+```Python
+jupyter nbextension install [--user] EXTENSION
+```
+notebook 扩展将会被安装到系统级的位置(例如：`/usr/local/share/jupyter/nbextensions`)。如果你使用`--user`安装，notebook扩展将会安装到`JUPYTER_DATA_DIR`。手动安装不能通过猜测文件应该安装到哪里来完成。(Installation SHOULD NOT be done manually by guessing where the files should go.)
+#### 内核
+内核的安装采用和notebook相同的方式。他们将会被自动迁移。
+内核描述过去通过以下命令安装：
+```Python
+ipython kernelspec install [--user] KERNEL
+```
+现在，通过以下命令安装：
+```Python
+jupyter kernelspec install [--user] KERNEL
+```
+默认情况下，内核描述将会安装到一个系统级位置(例如:`/usr/local/jupyter/kernels`)。如果你使用`--user`安装，notebook扩展将会安装到`JUPYTER_DATA_DIR`。手动安装不能通过猜测文件应该安装到哪里来完成。(Installation SHOULD NOT be done manually by guessing where the files should go.)
+
+### 了解imports的变化
+IPython 4.0 包含shim来管理依赖(dependency)，所有在IPython 3中可用的导入（import）在IPython 4中继续可用。
+一些变化包括：
+
+|**IPython 3**|**Jupyter and IPython 4.0**|
+|------|------|
+|`IPython.html`|`notebook`|
+|`IPython.html.widgets`|`ipywidgets`|
+|`IPython.kernel`|`jupyter_client, ipykernel`|
+|`IPython.parallel`|`ipyparallel`|
+|`IPython.qt.console`|`qtconsole`|
+|`IPython.utils.traitlets`|`traitlets`|
+|`IPython.config`|`traitlets.config`|
+
+重要变化:
+IPython.kernel 变成两个包：
++ jupyter_client: Jupyter 客户端API
++ ipykernel: Jupyter的IPython内核
+
+---
+
+## 用户界面构成(UI Components)
+**目录：**
++ Notebook 主面板(Notebook Dashboard)
++ Notebook 编辑器(Notebook Editor)
++ 交互式用户界面介绍(Interactive User Interface Tour of the Notebook)
+  + 编辑模式和Notebook编辑器(Edit Mode and Notebook Editor)
++ 文件编辑器(File Editor)
+
+当你打开问题报告(bug reports)或者给Jupyter邮件列表发送邮件时，了解用户界面各部分的名字是很有帮助的，可以使开发者和用户更快速的判断你的问题。这部分内容将帮你熟悉用户界面各部分的名字和Notebook不同的模式。
+
+### Notebook 主面板(Notebook Dashboard)
+当你运行`jupyter notebook`后，你看到的第一个页面就是Notebook主面板。
+![jupyter-notebook-dashboard.png](/sourcepictures/20161002/jupyter-notebook-dashboard.png)
+
+### Notebook 编辑器(Notebook Editor)
+当你选中一个Notebook开始编辑，这个Notebook将会在Notebook编辑器中打开。
+![jupyter-notebook-default.png](/sourcepictures/20161002/jupyter-notebook-default.png)
+
+### 交互式用户界面介绍(Interactive User Interface Tour of the Notebook)
+如果你想了解Notebook编辑器中某些部件，你可以使用菜单栏*Help/User Interface Tour*选项来浏览。
+
+#### 编辑模式和Notebook编辑器(Edit Mode and Notebook Editor)
+当一个单元处于编辑模式(edit mode)时，单元模式指示器(Cell Mode Indictor)将会发生改变来反映单元的状态。单元的状态通过界面右上方的小铅笔图标来指示。当单元处于命令模式(command mode)时，那个位置是没有图标的。
+![jupyter-notebook-edit.png](/sourcepictures/20161002/jupyter-notebook-edit.png)
+
+### 文件编辑器(File Editor)
+假设现在你在Notebook主面板选择打开Markdown文件，而不是Notebook文件；这样的话，这个文件将会在文件编辑器中打开。
+![jupyter-file-editor.png](/sourcepictures/20161002/jupyter-file-editor.png)
+
+
+
+<HR style="border:5 double #987cb9" width="100%" color=red SIZE=3>
+
+# 配置(CONFIGURATION)
+
+
+## 
 
