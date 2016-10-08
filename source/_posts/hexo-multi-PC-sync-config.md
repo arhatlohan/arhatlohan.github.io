@@ -143,3 +143,29 @@ def func:
 ```
 
 
+
+---
+
+## 关于SSH key
+新的主机或者是重装系统后的主机，在使用`git pull`时，会显示`Permission denied (publickey)`错误。这是因为系统里没有连接到github的SSH key。
+下面介绍如何生成、使用SSH key，过程翻译自[Github Help](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/):
+**生成新的SSH key**
+1. 打开Git Bush
+2. 粘贴下列代码到Git Bush，注意邮件地址要替换为你在Github的邮件地址。
+    `ssh-keygen -t rsa -b 4096 -C "your_email@example.com"`
+3. 当提示"Enter a file in which to save the key"时，按回车键。使用默认地址安装：
+    `Enter a file in which to save the key (/Users/you/.ssh/id_rsa): [Press enter]`
+4. 然后根据提示输入一个密码。获取更多信息,请参考[Working with SSH key passphrases](https://help.github.com/articles/working-with-ssh-key-passphrases):
+    `Enter passphrase (empty for no passphrase): [Type a passphrase]
+    Enter same passphrase again: [Type passphrase again]`
+
+**添加你的SSH key到ssh-agent**
+1. 确保ssh-agent启用：
+    `eval "$(ssh-agent -s)"`
+2. 添加SSH key到ssh-agent：
+    `ssh-add ~/.ssh/id_rsa`
+3. 将SSH key添加到GitHub账户。
+   请参考[Adding a new SSH key to your GitHub account](https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/)
+
+
+
