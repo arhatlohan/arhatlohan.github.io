@@ -432,7 +432,36 @@ IPython.kernel 变成两个包：
 <HR style="border:5 double #987cb9" width="100%" color=red SIZE=3>
 
 # 配置(CONFIGURATION)
+目录
++ 配置概述
++ 配置文件和命令行选项
++ 运行notebook服务器
++ Jupyter notebook 安全
++ 配置notebook前端(frontend)
++ Jupyter 扩展作为Python包发布(Distributing Jupyter Extensions as Python Packages)
++ 扩展Jupyter Notebook(Extending the Notebook)
 
 
-## 
+## 配置概述
+除了默认的配置设置，你可以配置很多的选项来满足你的工作流程。下面是使用Jupyter Notebook常用的配置：
++ Jupyter 通用配置系统
++ Notebook服务器
++ Notebook 前端客户端(Notebook front-end client)
++ Notebook 扩展(Notebook extensions)
 
+### Jupyter 通用配置系统
+Jupyter 应用程序，从Notebook到Jupyter Hub，以及nbgrader，使用同一个通用配置系统。所有的Jupyter应用程序创建配置文件和改变设置的过程都是相似的。
++ [Jupyter通用配置方法](https://jupyter.readthedocs.io/en/latest/projects/config.html)
++ [常用目录和文件位置](https://jupyter.readthedocs.io/en/latest/projects/jupyter-directories.html)
++ [编程语言内核(Language kernels)](https://jupyter.readthedocs.io/en/latest/projects/kernels.html)
++ [traitlets](https://traitlets.readthedocs.org/en/latest/config.html#module-traitlets.config):为配置提供一个低层次(low-level)的架构
+
+### Notebook服务器
+Notebook服务器运行编程语言内核，同时与前端Notebook客户端进行通信。
++ 配置Notebook服务器
+使用下面的命令在`.jupyter`目录创建`jupyter_notebook_config.py`文件，所有默认配置都被注释掉了：
+`jupyter notebook --generate-config`
+
++ [运行Notebook服务器](http://jupyter-notebook.readthedocs.io/en/latest/public_server.html#working-remotely)
+
++ 相关：[配置编程语言内核](http://jupyter.readthedocs.org/en/latest/install.html#installing-kernels)使你的Notebook服务器可以运行其它编程语言，例如R或Julia。
