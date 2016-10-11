@@ -16,4 +16,9 @@ $.map($('body > article:nth-child(4) > div > section > div > a'), function(e){re
 上图：
 ![oreilly_freebook_download.jpg](/sourcepictures/20161010/oreilly_freebook_download.jpg)
 
-"http://www.oreilly.com/programming/free/files/open-source-in-brazil.pdf", "http://www.oreilly.com/programming/free/files/ten-steps-to-linux-survival.pdf", "http://www.oreilly.com/programming/free/files/open-by-design.pdf", "http://www.oreilly.com/programming/free/files/getting-started-with-innersource.pdf", "http://www.oreilly.com/programming/free/files/microservices-in-production.pdf", "https://info.lightbend.com/COLL-20XX-Developing-Reactive-Microservices_Landing-Page.html?lst=OR", "http://www.oreilly.com/programming/free/files/microservices-antipatterns-and-pitfalls.pdf", "http://www.oreilly.com/programming/free/files/microservices-vs-service-oriented-architecture.pdf", "http://www.oreilly.com/programming/free/files/evolving-architectures-of-fintech.pdf", "http://www.oreilly.com/programming/free/files/software-architecture-patterns.pdf", "http://www.oreilly.com/programming/free/files/migrating-cloud-native-application-architectures.pdf", "http://www.oreilly.com/programming/free/files/reactive-microservices-architecture-orm.pdf"
+
+对于有些获取不出来的页面（比如Data Science 和 IoT），可以尝试：
+$.map($('body > article:nth-child(5) > div > section > div > a'), function(e){return e.href.replace(/free/, "free/files").replace(/csp.*/, "pdf")})
+
+
+
