@@ -8,9 +8,9 @@ tags: learn
 
 然后，笔者在网上了找到了不用注册的下载方法，感谢[潘家邦](https://yq.aliyun.com/articles/36565):
 在浏览器中启动F12启动检查元素，然后在Console中执行以下命令：
-```javascript
-$.map($('body > article:nth-child(4) > div > section > div > a'), function(e){return e.href.replace(/free/, "free/files").replace(/csp.*/, "pdf")})
-```
+
+    $.map($('body > article:nth-child(4) > div > section > div > a'), function(e){return e.href.replace(/free/, "free/files").replace(/csp.*/, "pdf")})
+
 就会输出下载地址。
 至于需要mobi、epub的朋友，只需要把代码中的pdf改为mobi、和epub即可。
 上图：
@@ -18,7 +18,7 @@ $.map($('body > article:nth-child(4) > div > section > div > a'), function(e){re
 
 
 对于有些获取不出来的页面（比如Data Science 和 IoT），可以尝试：
-$.map($('body > article:nth-child(5) > div > section > div > a'), function(e){return e.href.replace(/free/, "free/files").replace(/csp.*/, "pdf")})
+`$.map($('body > article:nth-child(5) > div > section > div > a'), function(e){return e.href.replace(/free/, "free/files").replace(/csp.*/, "pdf")})`
 
-
-
+对于Programming：
+`$.map($('body > article:nth-child(4) > div > section > div >div> a'), function(e){return e.href.replace(/free/, "free/files").replace(/csp.*/, "pdf")})`
