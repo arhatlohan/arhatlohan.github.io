@@ -196,7 +196,8 @@ WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
 ```
 
 **删除**
-使用`remove`方法可以将文档从数据库中**永久删除**。如果没有使用任何参数，它会将集合内的所有文档全部删除。它可以接受一个作为限定条件的文档作为参数。例如：
+使用`remove`方法可以将文档从数据库中**永久删除**。如果没有使用任何参数，它会将集合内的所有文档全部删除。但是**不会删除集合本身，也不会删除集合的元信息**。
+它可以接受一个作为限定条件的文档作为参数。例如：
 ```
 > db.blog.remove({"title":"My Blog Post"})
 WriteResult({ "nRemoved" : 1 })
@@ -235,6 +236,76 @@ UTF-8字符串都可以表示为字符串类型的数据。
 {"x": {"foo":"bar"}}
 + 对象id
 对象id是一个12字节的ID，是文档的唯一标识。
+MongoDB中存储的文档**必须**有一个"_id"键。这个键的值可以是任何类型的，默认是个ObjectId对象。
 {"x" : `ObjectId()`}
+
+**关于ObjectId**
+ObjectId使用12字节的存储空间，是一个由24个十六进制数字组成的字符串。
+
+    0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11
+         时间戳    |    机器   |  PID  |   计数器
+
++ 4字节时间戳，与后面的5字节组合起来，提供秒级别的唯一性。
++ 3字节机器唯一标识符，通常是主机名的hash。
++ 2字节进程PID，确保一台主机并发进程产生的ObjectId唯一。
++ 3字节计数器，自动增加，确保相同进程同一秒产生的ObjectId是不一样的。
+
+
+### 使用MongoDB shell
+可以将shell连接到任何MongoDB实例。
+`mongo somehost:30000/myDB`
+现在db就指向了somehost:30000上的myDB数据库。
+
+启动时也可以不连接到任何mongod，可以使用`--nodb`参数启动shell；启动后，在需要时可以运行`new Mongo("somehost:30000")`连接到想要的mongod。
+
+#### shell 技巧
+`help` 查看帮助
+`db.help()` 查看数据库级别的帮助
+`db.foo.help()` 查看集合级别的帮助
+如果想知道一个函数是做什么用的，可以直接在shell中输入函数名(函数名后不要加括号)，就可以看到相应的JavaScript实现代码。
+
+#### 使用shell执行脚本
+`mongo script1.js script2.js script3.js`
+mongo shell依次执行传入脚本，然后退出。如果希望使用指定主机和端口上的mongod运行脚本，需要先指定地址，然后再跟上脚本文件的名称：
+`mongo --quiet server1:30000/foo script1.js script2.js script3.js`
+这样可以将db指向server1：30000上的foo数据库，然后执行这三个脚本。注意运行shell时命令行参数要在地址之前。
+也可以使用load()函数，从交互式shell中运行脚本。
+`load("script1.js")`
+
+#### 创建`.mongorc.js`文件
+如果某些脚本会被频繁加载，可以将它们添加到`mongorc.js`文件中。这个文件会在启动shell时自动运行。`mongorc.js`位于用户主目录下。
+`.mongorc.js`最常见的用途之一是移除那些比较危险的shell辅助函数。
+```JavaScript 
+var no = function(){
+    print("Not on my watch.")
+};
+
+//禁止删除数据库
+db.dropDatabase = DB.prototype.dropDatabase = no;
+//禁止删除集合
+DBCollection.prototype.drop = no;
+//禁止删除索引
+DBCollection.prototype.dropIndex = no;
+```
+改变数据库函数时，要确保同时对db变量和DB原型进行改变(如上)。
+如果在启动shell时指定`--norc`参数，就可以禁止加载`.mongorc.js`.
+
+
+------
+
+## 创建、更新和删除文档
+### 插入
+`insert`：单个插入
+`batchInsert`：批量插入
+如果要导入原始数据，可以使用命令行工具，如`mongoimport`，而不是批量插入。
+如果在执行批量插入的过程中有一个文档插入失败，那么在文档之前的所有文档都会成功插入到集合中，而这个文档及以后的所有文档全部插入失败。
+
+由于MongoDB只进行最基本的检查，所以插入非法数据很容易。因此，应该只允许信任的源连接数据库。
+
+### 删除
+`db.foo.remove({})`
+**删除数据是永久的，不能撤销，也不能恢复。**
+删除文档通常很快，但是要清空整个集合，使用`drop`直接删除集合会更快。
+
 
 
