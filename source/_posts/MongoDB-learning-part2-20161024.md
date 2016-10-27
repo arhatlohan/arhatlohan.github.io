@@ -5,6 +5,9 @@ tags: MongoDB
 ---
 ## 创建、更新和删除文档
 ### 插入
+官方定义：
+> [**db.collection.insert()**](https://docs.mongodb.com/manual/reference/method/db.collection.insert/#db.collection.insert): Creates a new document in a collection.
+
 `insert`：单个插入
 `batchInsert`：批量插入
 如果要导入原始数据，可以使用命令行工具，如`mongoimport`，而不是批量插入。
@@ -18,6 +21,9 @@ tags: MongoDB
 删除文档通常很快，但是要清空整个集合，使用`drop`直接删除集合会更快。
 
 ### 更新
+官方文档定义：
+> [**db.collection.update()**](https://docs.mongodb.com/manual/reference/method/db.collection.update/#db.collection.update)：Modifies a document in a collection.
+
 一个常见的错误时查询条件匹配到了多个文档，然后更新时由于第二个参数的存在就产生重复的"_id"值。数据库会抛出错误，任何文档都不会更新。为避免这种情况，最好确保更新时总是指定一个唯一的文档，例如使用"_id"这样的键来匹配。
 
 #### 使用修改器

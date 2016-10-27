@@ -18,6 +18,13 @@ MongoDB在各方面的设计都旨在保持它的高性能。MongoDB能够对文
 
 ------
 
+### 官方重要帮助文件链接地址：
+[**Collection Methods**](https://docs.mongodb.com/manual/reference/method/js-collection/)
+
+
+
+------
+
 ## 基础知识
 + **文档**是MongoDB中数据的基本单元。
 + **集合**(collection)可以看作是一个拥有动态模式(dynamic schema)的表。
