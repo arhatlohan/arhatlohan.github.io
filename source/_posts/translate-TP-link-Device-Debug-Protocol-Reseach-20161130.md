@@ -3,7 +3,7 @@ title: 翻译：TP-link 设备调试协议(TDDP)研究
 date: 2016-11-30 20:35:40
 tags: IoT
 ---
-本文首发于看雪论坛:[bbs.pediy.com](bbs.pediy.com)
+本文首发于看雪论坛:[bbs.pediy.com](http://bbs.pediy.com/showthread.php?p=1455517#post1455517)
 原文地址：[HERE](https://www.coresecurity.com/blog/story-about-tp-link-device-debug-protocol-tddp-research?utm_source=Twitter)    作者：Andres Lopez Luksenberg   
 
 我之所以开始这项研究，是因为我试图简化WIFI渗透测试中用到的技术。我的想法是使用[WIWO](https://www.coresecurity.com/corelabs-research/open-source-tools/wiwo-wireless-workers)（这个工具是CoreSecurity去年发布的）在我主机的网络接口与路由器的WIFI接口之间建立一个透明通道。
