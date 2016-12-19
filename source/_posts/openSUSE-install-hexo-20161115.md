@@ -19,6 +19,13 @@ zypper install nodejs
 ```
 可以通过`node -v`查看nodejs版本
 
+针对42.2版本可以root运行以下代码：
+```
+zypper addrepo http://download.opensuse.org/repositories/devel:languages:nodejs/openSUSE_Leap_42.2/devel:languages:nodejs.repo
+zypper refresh
+zypper install nodejs
+```
+
 ---
 ## 安装Hexo
 `npm install -g hexo-cli`
