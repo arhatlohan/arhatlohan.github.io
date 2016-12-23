@@ -95,7 +95,7 @@ var temperature = -20;
 ```
 
 **布尔型** boolean
-ture  false
+true  false
 
 **数组**
 在JavaScript中，数组可以用关键字Array声明。声明数组的同时还可以指定数组初始元素的个数，也就是这个数组的长度（length）。
