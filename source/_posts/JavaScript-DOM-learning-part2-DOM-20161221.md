@@ -38,14 +38,17 @@ DOM中的M代表着“Model”（模型），但说它代表着“Map”（地�
 <p title="a gentle reminder">Don't forget to buy this stuff.</p>
 ```
 在上面DOM中，`title="a gentle reminder"`是一个属性节点，`p`是一个元素节点，`Don't forget to buy this stuff.`是文本节点。
+如图：
+![节点](/sourcepictures/20161221/node.jpg)
+
 
 **CSS**
 DOM并不是与网页结构打交道的唯一技术。我们还可以使用CSS（层叠样式表）告诉浏览器应该如何显示一份文档的内容。
 
 ### 获取元素
-有3中DOM方法可以获取元素节点，分别是通过元素ID、通过标签名字和通过类名字来获取。
+获取元素的方法主要有：getElementById()、getElementsByTagName()、getElementsByClassName()、getElementsByName()、
 #### getElementById
-这个方法将返回一个与那个有着给定id属性值的元素节点对应的对象。
+返回对拥有指定ID的第一个对象的引用。
 JavaScript区分大小写。
 它是document对象特有的函数。在脚本代码里，函数名的后面必须跟有一对圆括号，这对圆括号包含着函数的参数。`getElementById`方法只有一个参数：你想获得的那个元素的id属性的值，这个id值必须放在单引号或双引号里。
 `document.getElementById(id)`
@@ -54,7 +57,7 @@ e.g:
 document.getElementById("purchases")
 ```
 #### getElementsByTagName
-该方法返回一个对象数组，每个对象分别对应着文档里有这给定标签的一个元素。这个方法只有一个参数，它的参数是标签的名字：
+返回带有指定标签名的对象的集合。这个方法只有一个参数，它的参数是标签的名字：
 `element.getElementsByTagName(tag)`
 注意，它返回的是一个**数组**。
 e.g:
@@ -71,7 +74,7 @@ var shopping = document.getElementById("purchase");
 var items = document.getElementsByTagName("*");
 ```
 #### getElementsByClassName
-这个方法让我们能够通过class属性中的类名来访问元素。其只接受一个参数，就是类名：
+返回文档中所有指定类名的元素集合。其只接受一个参数，就是类名：
 `getElementsByClassName(class)`
 其返回结果为数组。
 使用这个方法还可以查找那些带有多个类名的元素。要指定多个类名，只要在字符串参数中用空格分割类名即可。eg：
@@ -99,6 +102,84 @@ function getElementsByClassName(node, classname){
 }
 
 ```
+
+#### getElementsByName
+该方法与getElementById()方法相类似，但是它查询的是元素的`name`属性，而不是`id`属性。
+因为一个文档中的name属性可能不唯一，所以它返回的方法是元素的数组，而不是一个元素。
+
+#### getElementsByTagNameNS(ns,name)
+返回带有指定名称和命名空间的所有元素的一个节点列表。
+该方法与 getElementsByTagName() 方法相似，只是它根据命名空间和名称来检索元素。只有使用命名空间的 XML 文档才会使用它。
+参数：
++ ns，字符串值，规定需要检索的命名空间名称。
++ name, 字符串值，规定要检索的标签名。
+
+
+---
+### 获取和设置属性
+我们已经知道获取元素的方法：getElementById()、getElementsByName()、getElementsByTagName()、getElementsByClassName()
+得到元素之后，我们可以设法获取它的属性。
+#### getAttribute（）
+获取属性
+`object.getAttribute(attribute)`
+getAttribute方法不属于document对象，所以不能通过document对象调用。它只能通过元素节点对象调用。
+```javascript
+document.getElementsByTagName("a")[107]
+输出：<a class="strong" href="http://ln.ifeng.com/a/20161223/5258480_0.shtml" target="_blank">辽宁:向25个单位反馈巡视情况 一针见血指出问题</a>
+
+document.getElementsByTagName("a")[107].getAttribute("href")
+输出："http://ln.ifeng.com/a/20161223/5258480_0.shtml"
+```
+#### setAttribute()
+对属性节点的值作出修改。
+`object.setAttribute(attribute, value)`
+```javascript
+#接上例
+document.getElementsByTagName("a")[107].setAttribute("href","flamepeak.com")
+##然后
+document.getElementsByTagName("a")[107].getAttribute("href")
+#输出
+“flamepeak.com”
+```
+
+#### childNodes属性
+一棵节点树上，childNodes属性可以用来获取任何一个元素的所有子元素，它一个包含这个元素全部子元素的数组。
+*element.childNodes*
+
+#### nodeType属性
+由childNodes属性返回的数组包含所有类型的节点，而不仅仅是元素节点。事实上，文档里几乎每一样东西都是一个节点，甚至连空格和换行符都会被解释为节点，而它们也全部包含在childNodes属性所返回的数组当中。
+还好，每一个节点都有一个nodeType属性，这个个属性可以让我们知道自己正在和哪种节点打交道，差劲的一点是nodeType的值并不是英文。
+获取节点的nodeType属性的语法是：
+*node.nodeType*
+nodeType属性共有12种可取的值，但其中最重要的是：
++ **元素节点**的nodeType属性值是1.
++ **属性节点**的nodeType属性值是2.
++ **文本节点**的nodeType属性值是3.
++ **注释**的nodeType属性值是8.
++ **文档**的nodeType属性值是9.
+
+---
+### 事件处理函数
+事件处理函数的作用是，在特定事件发生时调用特定的JavaScript代码。
+添加事件处理函数的语法是：
+*event* = *"JavaScript statement(s)"*
+需要注意的是，JavaScript代码包含在一对引号之间。可以吧任意数量的JavaScript语句放在这对引号之间，只要把各条语句用分号隔开即可。
+例如：`onClick = "showPic(this)"`
+其中，`this`关键字代表当前这个语句。
+
+事件处理函数的工作机制：
+在给某个元素添加了事件处理函数后，一旦事件发生，相应的JavaScript代码就会得到执行。被调用的JavaScript代码可以返回一个值，这个值将会被传递给那个事件处理函数。例如，我们可以给某个链接添加一个onClick事件处理函数，并让这个处理函数触发的JavaScript代码返回值是true或者false。这样一来，当这个链接不点击时，如果那段JavaScript代码返回的是true，onClick事件处理函数就认为“这个链接被点击了”，反之，如果返回值是false，onClick事件处理函数就认为“这个链接没有被点击”。
+例如，下面的代码：
+```javascript
+<a href="images/fire.jpg" onclick="showPic(this);">Fire</a>
+```
+其在点击后会调用showPic(this)，然后跳转打开链接。
+更改为下面的之后：
+```javascript
+<a href="images/fire.jpg" onclick="showPic(this);return false;">Fire</a>
+```
+这样，点击后调用执行showPic(this)，然后执行return false, 这样不会跳转。
+
 
 
 
