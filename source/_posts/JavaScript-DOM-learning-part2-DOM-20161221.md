@@ -510,6 +510,38 @@ addLoadEvent(highlightRows);
 ```
 如果想要改变某个元素的呈现效果，使用CSS；如果想改变某个元素的行为，使用DOM；如果你想根据某个元素的行为去改变它的呈现效果，请用你的智慧，这个问题没有放之四海皆准的答案。
 
+---
+### TEMP
+#### className 属性
+`className`属性是一个可读/可写的属性，凡是**元素节点**都有这个属性。
+可以用className属性得到一个元素的`class`属性：
+element.className
+用className属性和赋值操作符设置一个元素的class属性：
+element.className = value
+但是，通过className属性设置某个元素的class属性时将替换（而不是追加）该元素原有的class的设置。
+但可以使用字符串拼接操作，把新的class设置值追加到className属性上。例如：
+```js
+function addClass(element, value){
+  if (!element.className){
+    element.className = value;
+  }else {
+    newClassName = element.className;
+    newClassName += " ";
+    newClassName += value;
+    element.className = newClassName;
+  }
+}
+```
+
+
+
+
+
+
+
+
+
+
 
 
 
