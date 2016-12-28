@@ -2,6 +2,8 @@
 title: JavaScript DOM 编程艺术：动画
 date: 2016-12-27 17:17:21
 tags: [JavaScript, 笔记]
+comments: true
+categories: JavaScript
 ---
 ### 动画基础知识
 #### 位置

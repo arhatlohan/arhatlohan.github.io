@@ -12,7 +12,7 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://flamepeak
+url: http://flamepeak.com
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -39,7 +39,7 @@ relative_link: false
 future: true
 highlight:
   enable: true
-  line_number: true
+  line_number: false
   auto_detect: false
   tab_replace:
 
@@ -73,6 +73,13 @@ baidusitemap:
 
 #disqus
 #disqus_shortname: flamepeak
+#duoshuo
+duoshuo_shortname: flamepeak
+
+#cnzz_tongji
+cnzz_tongji:
+  enable: true
+  siteid: 1261063483
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
