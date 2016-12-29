@@ -13,11 +13,11 @@ GFW BLOG（功夫网与翻墙）:http://www.chinagfw.org
 
 **clowwindy推荐的提高水平的资料：**
 1. HTTP: The Definitive Guide
-2. TCP/IP Illustrated 
+2. TCP/IP Illustrated
 3. Stanford 的 Cryptography http://online.stanford.edu/course/cryptography
 ---
 网络监视器:https://nwmon.tifan.net/
-nhao
+
 
 wmon 是我最新的一个网络监视项目。使用 rrdtool 构建，这个监视器是轻量级的，可运行于几乎所有的平台上。
 
@@ -38,7 +38,7 @@ A fast tunnel proxy that helps you bypass firewalls
 rc4-md5是不安全的，不推荐使用。推荐使用AES-GCM或者chacha20-poly1305，其中如果是intel平台，AES-NI加速明显，而如果是考虑到客户端性能（ARM平台），chacha20-poly1305非常快。
 
 RC4是流加密，AES是分组加密，RC4快于AES，RC4已经被攻破，极不安全。
-如果是像Shadowsocks这样的应用场景，不需要高强度的加密，而只是作数据混淆，RC4是完全合适的。 
+如果是像Shadowsocks这样的应用场景，不需要高强度的加密，而只是作数据混淆，RC4是完全合适的。
 rc4-md5已经被IETF废除并明令禁止使用了，新的浏览器已经移除支持了
 
 table大概就是简单的密码表转置，性能好但已经可以归入古典密码学了。rc4是SS开发早期@clowwindy对密码学理解不充分的设计，没有正确使用IV，rc4-md5是正确的实现，两者性能应该接近。“rc4”会导致固定明文加密成固定密文，对抗选择明文攻击弱，统计特征明显。新加的OneTimeAuth主要是加个HMAC防御选择密文攻击。
@@ -46,18 +46,18 @@ table大概就是简单的密码表转置，性能好但已经可以归入古典
 ---
 相关测试数据：
 `
-encrypt and decrypt 20MB data 
-aes-128-cfb 0.368462085724s 
-aes-128-ofb 0.400309085846s 
-aes-192-cfb 0.452577829361s 
-aes-192-ofb 0.381041049957s 
-aes-256-cfb 0.418514966965s 
-aes-256-ofb 0.405379056931s 
-cast5-cfb 0.859935045242s 
-cast5-ofb 0.911785125732s 
-chacha20 0.429271936417s 
-rc4 0.154517173767s 
-rc4-md5 0.169504165649s 
+encrypt and decrypt 20MB data
+aes-128-cfb 0.368462085724s
+aes-128-ofb 0.400309085846s
+aes-192-cfb 0.452577829361s
+aes-192-ofb 0.381041049957s
+aes-256-cfb 0.418514966965s
+aes-256-ofb 0.405379056931s
+cast5-cfb 0.859935045242s
+cast5-ofb 0.911785125732s
+chacha20 0.429271936417s
+rc4 0.154517173767s
+rc4-md5 0.169504165649s
 salsa20 0.44139790535s
 `
 
@@ -72,7 +72,7 @@ salsa20 0.44139790535s
 ---
 你们都在想什么啊？SS的用途不是加密，而是混淆。但是仍然可以暴力破解，你设置数字密码一样是不行的。改进过的程序，IV不一样就分析不出差别来，可以抵御基于统计学的计算。
 
-在通常应用中，SS主要是提供了一个不会被干扰的通道，你SS里面走的东西，一般都还有自己的TLS吧？ 如果VPN不会被干扰，谁会用这个东西。 
+在通常应用中，SS主要是提供了一个不会被干扰的通道，你SS里面走的东西，一般都还有自己的TLS吧？ 如果VPN不会被干扰，谁会用这个东西。
 
 作者：匿名用户
 链接：https://www.zhihu.com/question/28252105/answer/53569320
@@ -93,7 +93,7 @@ AES-256-*（甚至即使是没有IV的EBC）几乎在所有时候都比 RC4-MD5 
 shadowsocks是被设计来混淆数据，增加某Wall检查出流量特征所需的计算量，提高实时检测的成本，而不是加密。ss的作者多次强调过这一点([Correct username/password auth model · Issue #169 · shadowsocks/shadowsocks · GitHub]https://link.zhihu.com/?target=https%3A//github.com/shadowsocks/shadowsocks/issues/169)):
 > "We don't need security. We need indistinguishability from random bytes."
 
-说这些并不是指责ss的安全性，而是再三强调不要忘记ss作者的本意——这是一个帮你能用Google又或者是看别的什么奇怪网站的混淆工具，其意义是瞒过Wall的实时流量检测，而不是瞒过Wall后面的master minds。ss不是一个真正意义上的VPN，它无法保护你的数据安全。 
+说这些并不是指责ss的安全性，而是再三强调不要忘记ss作者的本意——这是一个帮你能用Google又或者是看别的什么奇怪网站的混淆工具，其意义是瞒过Wall的实时流量检测，而不是瞒过Wall后面的master minds。ss不是一个真正意义上的VPN，它无法保护你的数据安全。
 
 作者：rlei
 链接：https://www.zhihu.com/question/28252105/answer/53481328
@@ -107,20 +107,3 @@ https://busi.me/archives/33/
 https://cn.v2ex.com/t/206358
 
 defuse.ca/cbcmodeiv.htm
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
