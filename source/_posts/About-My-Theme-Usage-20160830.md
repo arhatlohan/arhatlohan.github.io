@@ -34,3 +34,85 @@ Size：规定文本的尺寸大小。可能的值：从 1 到 7 的数字。浏�
 <font color=Crimson size=1>color=Crimson size=1</font>
 
 备注：[颜色名列表与图释](http://blog.csdn.net/testcs_dn/article/details/45719357)
+
+
+## Hexo离线安装Mathjax
+这部分参考：[在Hexo中离线安装数据工具包-Mathjax](http://kubicode.me/2016/01/27/Hexo/Offline-Install-Mathjax-In-Hexo-Jacman/)
+
+毕竟我是数学出身，Blog如果不支持公式，那岂不是笑话。
+
+在`casper/post`目录下新建文件`mathjax.ejs`，并写入内容：
+```
+<!-- mathjax config similar to math.stackexchange -->
+<% if (theme.mathjax || page.mathjax){ %>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="/js/mathjax27/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<% } %> 
+
+```
+
+然后在casper/post.ejs中添加：
+```
+<%- partial('post/mathjax') %>
+```
+原来引用官网的js：
+`<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">`
+到官网http://docs.mathjax.org/en/latest/installation.html下载Mathjax离线包，离线包下载之后解压里面的`unpacked目录`，里面有整理好的直接引用的资源。
+
+在`theme/ghost-casper/source/js`新建一个`mathjax27`目录，并将unpacked下的文件都复制到这里。最后修改`mathjax.ejs`中的引用：
+`script type="text/javascript" src="/js/mathjax27/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>`
+
+**问题**
+但是，最后出现一个问题，在网页加载成功之后，公式正常显示，但是过一段时间之后显示`Math Processing Error`:
+```
+Error: Cannot read property 'length' of undefined
+Debugging tips: use 'mathjax27/MathJax.js', inspect 'MathJax.Hub.lastError' in the browser console
+```
+不知道哪个地方出问题，水平菜。高手指点一下。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
