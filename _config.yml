@@ -63,7 +63,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: jacman #ghost-casper #hexo-theme-next # # #ghost-casper
+theme: jacman  #hexo-theme-next # # #ghost-casper
 
 # generate sitemap
 sitemap:
@@ -85,7 +85,9 @@ cnzz_tongji:
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: git@github.com:arhatlohan/arhatlohan.github.io.git
+  repository: 
+    #github: git@github.com:arhatlohan/arhatlohan.github.io.git
+    coding: git@git.coding.net:flamepeak/flamepeak.git
   branch: master
 
 plugins: hexo-generator-feed

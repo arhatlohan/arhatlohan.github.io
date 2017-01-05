@@ -2,6 +2,8 @@
 title: 关于我的主题的一些设置
 date: 2016-08-30 23:18:07
 tags: [Theme, Hexo]
+categories: Hexo
+mathjax: true
 ---
 
 ## Introduce
@@ -97,22 +99,32 @@ Debugging tips: use 'mathjax27/MathJax.js', inspect 'MathJax.Hub.lastError' in t
 ```
 不知道哪个地方出问题，水平菜。高手指点一下。
 
+#### 使用Staticfile CDN加速Latex公式渲染
+参考：[使用Staticfile CDN加速Latex公式渲染](https://metaquant.org/shi-yong-staticfile-cdnjia-su-latexgong-shi-xuan-ran.html)
+多亏了Mathjax与Markdown,我们现在可以在markdwon文件中标记出latex代码，然后mathjax脚本可以正确的渲染这些代码，从而显示出清晰美观的公式。这比传统的插入公式图片等方式要更加便利，显示效果也更加优秀。
+
+引入Mathjax脚本最简单的方式是直接使用Mathjax提供的CDN,可以用以下脚本实现：
+`<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>`
+
+可惜的是，由于Mathjax的CDN位于国外，其访问速度堪忧，而且由于需要下载的文件较多较大，公式的渲染过程非常缓慢，偶尔还会出现渲染失败的情况。幸运的是，由七牛云与CDN联合提供的[Staticfile CDN](https://staticfile.org/)网站提供了Mathjax脚本的国内版本，经过测试发现，其下载与渲染速度远快于Mathjax原生的CDN。
+
+Staticfile CDN使用方式非常简单，在搜索框中输入`Mathjax`,就会出现Mathjax相应的静态文件，复制其中js文件的地址，并替换Mathjax原生CDN的地址，结果如下：
+`<script src='https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>`
+
+插入公式示例：
+首先，插入一个行内公式，需要使用`$...$`来实现：$x^2+y^2=z^2$
+插入单独一行的公式，需要使用`$$...$$`的方式来实现，如：
+
+$$
+\theta_i = \theta_i - \alpha\frac\partial{\partial\theta_i}J(\theta)
+$$
 
 
+此外，也可以使用`\begin{equation}...\end{equation}`的方式插入独行公式，右边会显示公式编号，如下：
+```Latex
+\begin{equation}J(u(t)) = \int_0^\infty  {{e^{ - \delta t}}} V(t)u(t)dt\end{equation}
+```
+**这种方法不行，暂时未找到解决办法**
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+另外，为了加快网页渲染的速度，在`_config.yml`中将`mathjax`设置为`false`,在含有公式的文章里开头设置`mathjax: true`。
 
