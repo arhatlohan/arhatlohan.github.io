@@ -45,6 +45,7 @@ DNS服务器：可以不修改
 ![Fifth Step](/sourcepictures/20160902/5_payment_ways.png)
 
 ---
+
 ### 三、使用管理
 管理界面很简洁，把主要的列出来，如图，接下来重点讲一下域名防护，因为出现过不少域名被盗的情况，特别是域名价值较大的时候
 ![Sixth Step](/sourcepictures/20160902/6_manager_panel.jpg)
@@ -86,6 +87,7 @@ DNS服务器：可以不修改
 可以参加，打开页面勾选即可
 
 ---
+
 ### 四、GitHub Pages绑定顶级域名的方法
 在NameSilo中右侧面板Account Option ->domain manager会显示你的域名，点击域名
 ![10th Step](/sourcepictures/20160902/10_domain_console.jpg)

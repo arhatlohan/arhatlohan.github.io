@@ -8,6 +8,7 @@ tags: [cryptography, 笔记]
 + 混合密码系统
 
 ---
+
 ## 一、公钥密码
 ### 1.密钥分发问题(key distribution problem)
 解决密码分发问题有以下几种方法：
@@ -46,6 +47,7 @@ tags: [cryptography, 笔记]
 在对称密码中，加密密钥和解密密钥是相同的，但是公钥密码中，加密密钥和解密密钥是不同的。只要有加密密钥，任何人都可以进行加密，但只有拥有解密密钥的人才可以解密。
 
 ---
+
 ### 2. 公钥密码(public-key cryptography)
 又称为**非对称密码**（asymmetric cryptography）
 公钥(public key)
@@ -60,6 +62,7 @@ tags: [cryptography, 笔记]
 2. 公钥密码的速度只有对称密码的几百分之一。
 
 ---
+
 ### 3. RSA
 详细描述可以参考：
 [阮一峰博客：RSA算法原理一](http://www.ruanyifeng.com/blog/2013/06/rsa_algorithm_part_one.html)
@@ -119,6 +122,7 @@ Rabin方式是由M.O.Rabin设计的公钥算法。Rabin方式利用了mod N下�
 
 
 ---
+
 ## 二、混合密码系统
 基本思想：用对称密码提高加解密速度，用公钥密码保护会话密钥
 机制如下:

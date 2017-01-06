@@ -67,6 +67,7 @@ BIOS中要开启Hyper-V,有些机器是VT-x；前期Docker报错基本都是这�
 
 
 ---
+
 ### 安装Tensorflow
 #### 标准按照
 4 Docker images:
@@ -95,6 +96,7 @@ docker run -it -p 8888:8888 gcr.io/tensorflow/tensorflow
 
 
 ---
+
 ### 运行
 安装之后，启动带有TensorFlow image的Docker容器：
 ```

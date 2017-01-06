@@ -121,10 +121,12 @@ $$
 
 
 此外，也可以使用`\begin{equation}...\end{equation}`的方式插入独行公式，右边会显示公式编号，如下：
-```Latex
+```
 \begin{equation}J(u(t)) = \int_0^\infty  {{e^{ - \delta t}}} V(t)u(t)dt\end{equation}
 ```
+
 **这种方法不行，暂时未找到解决办法**
 
 另外，为了加快网页渲染的速度，在`_config.yml`中将`mathjax`设置为`false`,在含有公式的文章里开头设置`mathjax: true`。
+
 

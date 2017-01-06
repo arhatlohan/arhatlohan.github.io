@@ -15,6 +15,7 @@ tags: [Linux, Tips]
 ```
 
 ---
+
 ### Linux 在多个文件中批量替换字符串
 ```
 sed -i "s/OldString/NewString/g"  `grep OldString -rl Dir`

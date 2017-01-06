@@ -3,19 +3,21 @@ title: Shadowsock 分析与学习
 date: 2016-12-23 08:12:49
 tags: [Shadowsock, VPN, cryptography]
 ---
+
 Shadowsocks学习汇总资料，有引用，在此致谢前辈！
 [ShadowSocks（影梭）不完全指南](http://www.auooo.com/2015/06/26/shadowsocks%EF%BC%88%E5%BD%B1%E6%A2%AD%EF%BC%89%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/)
 GFW BLOG（功夫网与翻墙）:http://www.chinagfw.org
 
 
 ---
+
 "距上次被警方约谈两天之后，任职于北京智者天下科技有限公司（知乎网）的 clowwindy 今日被要求彻底删除 [shadowsocks 项目](https://github.com/shadowsocks/shadowsocks-iOS/issues/124#issuecomment-133630294)于 Github 上发布的所有源码。目前所有子项目页面均显示“Removed according to regulations”。clowwindy 本人的推特账户也已被设为隐私模式，未经许可的关注者无法查看其过往言论。鉴于其所使用的 Apache License，已有部分用户自发创建了项目备份（例如[这里](https://github.com/Long-live-shadowsocks)和[这里](https://github.com/ShadowsocksBackup)）。令人毫无意外的是，V2EX上的相关讨论（[镜像](http://archive.is/offset=190/www.v2ex.com)）均被删除。"
 
 **clowwindy推荐的提高水平的资料：**
 1. HTTP: The Definitive Guide
 2. TCP/IP Illustrated
 3. Stanford 的 Cryptography http://online.stanford.edu/course/cryptography
----
+
 网络监视器:https://nwmon.tifan.net/
 
 
@@ -24,6 +26,7 @@ wmon 是我最新的一个网络监视项目。使用 rrdtool 构建，这个监
 这个项目的目的是通过全球各主要数据中心对中国各重点网络交换中心的监视获取在极度拥塞前提下的连接中国以外与中国的网络的最佳链路以及时间—性能曲线并根据其对在海外或中国的对其相反的方向的连接性有使用需求的人群对网络路径的选择进行有针对性的优化。
 
 ---
+
 ### Introduction
 ShadowSocks是由@clowwindy开发的一个开源Socks5代理。
 A secure socks5 proxy, designed to protect your Internet traffic
@@ -31,9 +34,8 @@ A fast tunnel proxy that helps you bypass firewalls
 
 
 
-
-
 ---
+
 ### 关于Shadowsocks加密
 rc4-md5是不安全的，不推荐使用。推荐使用AES-GCM或者chacha20-poly1305，其中如果是intel平台，AES-NI加速明显，而如果是考虑到客户端性能（ARM平台），chacha20-poly1305非常快。
 
@@ -43,7 +45,9 @@ rc4-md5已经被IETF废除并明令禁止使用了，新的浏览器已经移除
 
 table大概就是简单的密码表转置，性能好但已经可以归入古典密码学了。rc4是SS开发早期@clowwindy对密码学理解不充分的设计，没有正确使用IV，rc4-md5是正确的实现，两者性能应该接近。“rc4”会导致固定明文加密成固定密文，对抗选择明文攻击弱，统计特征明显。新加的OneTimeAuth主要是加个HMAC防御选择密文攻击。
 
+
 ---
+
 相关测试数据：
 `
 encrypt and decrypt 20MB data
@@ -70,6 +74,7 @@ salsa20 0.44139790535s
 链接：https://www.zhihu.com/question/28252105/answer/53573849
 
 ---
+
 你们都在想什么啊？SS的用途不是加密，而是混淆。但是仍然可以暴力破解，你设置数字密码一样是不行的。改进过的程序，IV不一样就分析不出差别来，可以抵御基于统计学的计算。
 
 在通常应用中，SS主要是提供了一个不会被干扰的通道，你SS里面走的东西，一般都还有自己的TLS吧？ 如果VPN不会被干扰，谁会用这个东西。
@@ -78,6 +83,7 @@ salsa20 0.44139790535s
 链接：https://www.zhihu.com/question/28252105/answer/53569320
 
 ---
+
 IV的主要要求在于 uniqueness ，而非 secretness 。它的主要目标是在于防范 ECB 导致的统计攻击——同样的明文永远导致同样的密码，累计足够多的数据之后即可分析 pattern 或做统计来解密。这对于 block size 很小甚至是 byte-by-byte 的流式加密来说破坏更严重，最坏情况就是凯撒密码。
 
 人们希望给明文—密文对应加入一些随机性，或者至少是不确定性。一个巧妙的办法就是把上一块的加密结果带到下一块里（可以是按位 xor 之类），这样同一块明文的密文就根据上下文不同而不同了。如此一来就需要有一个起始的密文，就是 Initialization Vector 。IV的加入为上述模式进一步增加了安全性（即使上下文一样，这个会话的IV不同密文也不同）。根据原理就可以知道，IV的唯一要求就是尽量不要重复，最好是难以预测的随机值。至于传输，完全可以是公开明文的。当然，一些协议可能把IV协商放在加密通道里进行，只是 defense by depth 罢了。
@@ -88,6 +94,7 @@ AES-256-*（甚至即使是没有IV的EBC）几乎在所有时候都比 RC4-MD5 
 链接：https://www.zhihu.com/question/28252105/answer/53562933
 
 ---
+
 讨论shadowsocks不同加密方式的安全性没有意义。
 
 shadowsocks是被设计来混淆数据，增加某Wall检查出流量特征所需的计算量，提高实时检测的成本，而不是加密。ss的作者多次强调过这一点([Correct username/password auth model · Issue #169 · shadowsocks/shadowsocks · GitHub]https://link.zhihu.com/?target=https%3A//github.com/shadowsocks/shadowsocks/issues/169)):
@@ -100,6 +107,7 @@ shadowsocks是被设计来混淆数据，增加某Wall检查出流量特征所�
 
 
 ---
+
 https://www.futures.moe/feed.xml
 
 https://busi.me/archives/33/

@@ -116,6 +116,7 @@ function getElementsByClassName(node, classname){
 
 
 ---
+
 ### 获取和设置属性
 我们已经知道获取元素的方法：getElementById()、getElementsByName()、getElementsByTagName()、getElementsByClassName()
 得到元素之后，我们可以设法获取它的属性。
@@ -175,6 +176,7 @@ nodeType属性共有12种可取的值，但其中最重要的是：
 
 
 ---
+
 ### 事件处理函数
 事件处理函数的作用是，在特定事件发生时调用特定的JavaScript代码。
 添加事件处理函数的语法是：
@@ -199,6 +201,7 @@ nodeType属性共有12种可取的值，但其中最重要的是：
 
 
 ---
+
 ### 最佳实践
 + 确保网页在没有JavaScript的情况下也能正常工作
 + 把网页的结构和内容与JavaScript脚本的动作行为分开。
@@ -344,6 +347,7 @@ addLoadEvent(secondFunction);
 
 
 ---
+
 ### 动态创建标记
 #### document.write
 document对象的`write()`方法可以方便快捷的把字符串插入到文档里。
@@ -388,6 +392,7 @@ function insertAfter(newElement, targetElement){
 ```
 
 ---
+
 ### Ajax
 2005年，Adaptive Path公司的Jesse James Garrett发明了Ajax这个词，用于概括异步加载页面内容的技术。以前，Web应用都要涉及大量的页面刷新：用户点击某个链接，请求发回服务器，然后服务器根据用户的操作再返回新页面。即便用户看到的只是页面中的一小部分有变化，也要刷新和重新加载整个页面。
 
@@ -402,6 +407,7 @@ Ajax技术的核心就是`XMLHttpRequest`对象，这个对象充当着浏览器
 
 
 ---
+
 ### 应该怎么做
 + 渐进增强（progressive enhancement）：渐进增强原则基于这样一种思想：你应该总是从最核心的部分，也就是从内容开始。应该根据内容使用标记实现良好的结构，然后再逐步加强这些内容。这些增强工作既可以是通过CSS改进呈现效果，也可以是通过DOM添加各种行为。
 + 平稳退化。渐进增强的实现必然支持平稳退化。如果你按照渐进增强的原则去充实内容，你为内容添加的样式和行为就自然支持平稳退化，那些缺乏必要的CSS和DOM支持的访问者仍可以访问到你的核心内容。
@@ -511,6 +517,7 @@ addLoadEvent(highlightRows);
 如果想要改变某个元素的呈现效果，使用CSS；如果想改变某个元素的行为，使用DOM；如果你想根据某个元素的行为去改变它的呈现效果，请用你的智慧，这个问题没有放之四海皆准的答案。
 
 ---
+
 ### TEMP
 #### className 属性
 `className`属性是一个可读/可写的属性，凡是**元素节点**都有这个属性。

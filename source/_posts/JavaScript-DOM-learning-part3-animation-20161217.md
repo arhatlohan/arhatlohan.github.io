@@ -5,6 +5,7 @@ tags: [JavaScript, 笔记]
 comments: true
 categories: JavaScript
 ---
+
 ### 动画基础知识
 #### 位置
 网页元素在浏览器窗口里的位置是一种表示性的信息。因此，位置信息通常是由CSS负责设置的。

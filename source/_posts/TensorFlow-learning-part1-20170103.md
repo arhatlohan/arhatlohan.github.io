@@ -2,6 +2,7 @@
 title: TensorFlow 学习(一)
 date: 2017-01-03 09:43:14
 tags: [TensorFlow, Learning]
+mathjax: true
 ---
 
 ### Basic Usage
@@ -119,6 +120,7 @@ with tf.Session() as sess:
 
 
 ---
+
 ### MNIST for ML Beginners
 MNIST is a simple computer vision dataset.
 
@@ -130,9 +132,9 @@ A softmax regression has two steps: first we add up the evidence of our input be
 
 $$
 \begin{eqnarray}
-\nabla\cdot\vec{E} &=& \frac{\rho}{\epsilon_0} \\
-\nabla\cdot\vec{B} &=& 0 \\
-\nabla\times\vec{E} &=& -\frac{\partial B}{\partial t} \\
+\nabla\cdot\vec{E} &=& \frac{\rho}{\epsilon_0} \
+\nabla\cdot\vec{B} &=& 0 \
+\nabla\times\vec{E} &=& -\frac{\partial B}{\partial t} \
 \nabla\times\vec{B} &=& \mu_0\left(\vec{J}+\epsilon_0\frac{\partial E}{\partial t} \right)
 \end{eqnarray}
 $$

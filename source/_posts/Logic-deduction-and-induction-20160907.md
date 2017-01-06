@@ -1,5 +1,5 @@
 ---
-title: 逻辑学：演绎（deduction）与归纳（induction）区别
+title: 逻辑学:演绎（deduction）与归纳（induction）区别
 date: 2016-09-07 18:35:31
 tags: Logic
 ---
