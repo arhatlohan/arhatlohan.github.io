@@ -98,6 +98,7 @@ docker run -it -p 8888:8888 gcr.io/tensorflow/tensorflow
 ---
 
 ### 运行
+#### 基于jupyter
 安装之后，启动带有TensorFlow image的Docker容器：
 ```
 docker run -it -p 8888:8888 gcr.io/tensorflow/tensorflow
@@ -107,8 +108,42 @@ The option `-p 8888:8888` is used to publish the Docker container᾿s internal p
 
 The format of the port mapping is `hostPort:containerPort`. You can specify any valid port number for the host port but have to use `8888` for the container port portion.
 
+#### 挂载本地目录与文件
+当我们在docker容器中运行服务时,经常会有需要将服务数据持久化的场景。那具体保存到哪里呢?容器的无状态特性决定了我们不应该将数据保存在容器中, 因为容器一旦重启, 文件数据就会丢失.一般应该使用volume参数,通过挂载外部文件系统到Docker容器中来保存数据.
 
+docker可以支持把一个宿主机上的目录挂载到镜像里。
+```
+docker run -it -v /home/sun/Downloads:/mnt ubuntu64 /bin/bash
+```
+通过`-v`参数，冒号前为宿主机目录，必须为绝对路径，冒号后为镜像内挂载的路径。
+或者
+```
+docker run -it -v /home/sun/Downloads:/mnt -p 8888:8888 ubuntu64
+```
+这样就可以在docker中处理文件了。
+默认挂载的权限为读写。如果指定为只读，可以用：`ro`
+```
+docker run -it -v /home/sun/Downloads:/mnt:ro  ubuntu64 /bin/bash
+```
 
+另外，docker还提供了一种高级的用法叫数据卷。数据卷其实就是一个正常的容器，专门用来提供数据卷供其它容器挂载的。此处不详述。
+
+然后更改jupyter notebook的工作目录：
+```
+jupyter notebook --generate-config
+```
+如果显示文件已经存在的话，就选不覆盖。然后，打开提示的文件路径，修改配置文件：
+```
+vi /root/.jupyter/jupyter_notebook_config.py
+```
+添加：
+```
+c.NotebookApp.notebook_dir = '/mnt'
+```
+实在不行的话，就使用笨方法：将需要的文件夹复制到`/notebooks`下面，
+```
+cp -r /mnt/tensorflow-r0.12/ /notebooks
+```
 
 
 

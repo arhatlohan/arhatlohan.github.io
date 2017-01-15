@@ -19,6 +19,7 @@ hexo作为一个非常优秀的静态博客框架，hexo与传统的博客托管
 
 ## Steps
 首先我们进入到博客系统的根目录，比如blog目录，这里边有个.gitignore文件（如果该文件不存在，自己创建一个），里边默认已经把该忽略的目录文件都写好了，里边内容如下：
+
 > .DS_Store
 > Thumbs.db
 > db.json
@@ -28,6 +29,7 @@ hexo作为一个非常优秀的静态博客框架，hexo与传统的博客托管
 > .deploy*/%
 
 然后在blog目录初始化仓库，切换到source分支，关联远程仓库，并push到远程仓库的source分支
+
 1. $ cd blog
 2. $ git init                 #在当前目录新建一个Git代码库
 3. $ git checkout -b source   #新建一个source分支，并切换到该分支
@@ -37,18 +39,22 @@ hexo作为一个非常优秀的静态博客框架，hexo与传统的博客托管
 7. $ git push origin source   #推送更新到云端服务器
 
 ### 添加本地文件到仓库并同步到git上，可以用：
+
 > git add . 
 > git commit -m "first commit" 
 > git push origin source
 
 ### 将git的内容同步到B主机
 在另外一台电脑上，先把node环境配好，安装hexo。
+
 > npm install hexo-cli -g
 
 注意不要再执行：
+
 > hexo init blog 
 
 取而代之的是
+
 > git clone -b source git@github.com:username/username.github.io.git
 > cd username.github.io
 > npm install //根据package.json来下载依赖包
@@ -107,6 +113,7 @@ git submodule update</code></pre>
 采用devtian 的submodule方法，可以成功建立，但是更新不成功。
 在stackoverflow找到解决办法[Git submodule push](http://stackoverflow.com/questions/5814319/git-submodule-push)
 A submodule is nothing but a clone of a git repo within another repo with some extra meta data (gitlink tree entry, .gitmodules file )
+
 > $ cd your_submodule     #themes/ghost-casper
 > $ git checkout master
 > $ git commit -a -m "commit in submodule"
@@ -117,6 +124,7 @@ A submodule is nothing but a clone of a git repo within another repo with some e
 
 原理我没有搞明白，至少可以实现，另外submodule更新较慢，需要多等一会,才能在github上看到
 因为要备份md sourcefile，所以要记得多更新
+
 > $ git add .
 > $ git commit -m "add blog"
 > $ git push origin source

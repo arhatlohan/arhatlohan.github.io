@@ -12,7 +12,7 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://flamepeak.com
+url: http://flamepeak.com/
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -86,8 +86,8 @@ cnzz_tongji:
 deploy:
   type: git
   repository: 
-    #github: git@github.com:arhatlohan/arhatlohan.github.io.git
-    coding: git@git.coding.net:flamepeak/flamepeak.git
+    github: git@github.com:arhatlohan/arhatlohan.github.io.git
+    #coding: git@git.coding.net:flamepeak/flamepeak.git
   branch: master
 
 plugins: hexo-generator-feed
