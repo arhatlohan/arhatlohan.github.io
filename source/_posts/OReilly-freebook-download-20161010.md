@@ -1,7 +1,7 @@
 ---
 title: O'Reilly 免费电子书 下载
 date: 2016-10-10 18:36:33
-tags: learn
+tags: 
 ---
 
 著名计算机科学类图书发行商 O'Reilly 向用户提供了数十本免费的电子书，这些电子书根据其类别分为[编程类](http://www.oreilly.com/programming/free/)，[数据科学和人工智能类](http://www.oreilly.com/data/free/)，[安全类](http://www.oreilly.com/security/free/)，[Web开发类](http://www.oreilly.com/web-platform/free/)，以及[物联网类](http://www.oreilly.com/iot/free/)。这些电子书很多是近期出版的，如《Swift Pocket Reference》，《Real-World Maintainable Software》。电子书提供了epub、mobi和PDF三种版本，下载这些电子书需要注册，但有人发布了直接下载的[链接](https://www.reddit.com/r/learnprogramming/comments/556kxj/oreilly_offering_programming_ebooks_for_free/)（只包含一部分）。

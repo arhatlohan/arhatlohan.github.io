@@ -1,7 +1,7 @@
 ---
 title: pip pip2 pip3冲突与使用
 date: 2017-01-05 09:49:39
-tags: [pip, pip2, pip3]
+tags: [Python]
 categories: Python
 ---
 在linux系统中，如果同时安装python2和python3，在使用pip时会出现问题。
@@ -27,9 +27,3 @@ pip install sth
 py -2 -m pip install sth
 py -3 -m pip install sth
 ```
-
-
-
-
-
-
