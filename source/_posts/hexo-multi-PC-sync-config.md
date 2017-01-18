@@ -40,8 +40,8 @@ hexo作为一个非常优秀的静态博客框架，hexo与传统的博客托管
 
 ### 添加本地文件到仓库并同步到git上，可以用：
 
-> git add . 
-> git commit -m "first commit" 
+> git add .
+> git commit -m "first commit"
 > git push origin source
 
 ### 将git的内容同步到B主机
@@ -51,7 +51,7 @@ hexo作为一个非常优秀的静态博客框架，hexo与传统的博客托管
 
 注意不要再执行：
 
-> hexo init blog 
+> hexo init blog
 
 取而代之的是
 
@@ -113,22 +113,22 @@ git submodule update</code></pre>
 采用devtian 的submodule方法，可以成功建立，但是更新不成功。
 在stackoverflow找到解决办法[Git submodule push](http://stackoverflow.com/questions/5814319/git-submodule-push)
 A submodule is nothing but a clone of a git repo within another repo with some extra meta data (gitlink tree entry, .gitmodules file )
-
-> $ cd your_submodule     #themes/ghost-casper
-> $ git checkout master
-> $ git commit -a -m "commit in submodule"
-> $ git push
-> $ cd ..
-> $ git add your_submodule
-> $ git commit -m "Updated submodule"
-
+```Bash
+$ cd your_submodule     #themes/ghost-casper  
+$ git checkout master
+$ git commit -a -m "commit in submodule"
+$ git push
+$ cd ..
+$ git add your_submodule
+$ git commit -m "Updated submodule"
+```
 原理我没有搞明白，至少可以实现，另外submodule更新较慢，需要多等一会,才能在github上看到
 因为要备份md sourcefile，所以要记得多更新
-
-> $ git add .
-> $ git commit -m "add blog"
-> $ git push origin source
-
+```Bash
+$ git add .
+$ git commit -m "add blog"
+$ git push origin source
+```
 
 
 
@@ -159,7 +159,9 @@ def func:
 ## 关于SSH key
 新的主机或者是重装系统后的主机，在使用`git pull`时，会显示`Permission denied (publickey)`错误。这是因为系统里没有连接到github的SSH key。
 下面介绍如何生成、使用SSH key，过程翻译自[Github Help](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/):
+
 **生成新的SSH key**
+
 1. 打开Git Bush
 2. 粘贴下列代码到Git Bush，注意邮件地址要替换为你在Github的邮件地址。
     `ssh-keygen -t rsa -b 4096 -C "your_email@example.com"`
@@ -170,12 +172,10 @@ def func:
     Enter same passphrase again: [Type passphrase again]`
 
 **添加你的SSH key到ssh-agent**
+
 1. 确保ssh-agent启用：
     `eval "$(ssh-agent -s)"`
 2. 添加SSH key到ssh-agent：
     `ssh-add ~/.ssh/id_rsa`
 3. 将SSH key添加到GitHub账户。
    请参考[Adding a new SSH key to your GitHub account](https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/)
-
-
-
